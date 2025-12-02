@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APUs Estructurados - Gobernación de Antioquia</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --verde-antioquia: #1B5E20;
+            --verde-oscuro: #0D3311;
+            --verde-claro: #2E7D32;
+            --gris-claro: #6c757d;
+            --dorado: #D4AF37;
+            --dorado-claro: #F5E6A3;
+            --dorado-suave: rgba(212, 175, 55, 0.15);
+            --negro: #1a1a1a;
+            --gris-oscuro: #2d2d2d;
+            --gris-medio: #5a5a5a;
+            --gris-claro: #f5f5f5;
+            --blanco: #ffffff;
+            --sombra: 0 4px 24px rgba(0,0,0,0.12);
+            --sombra-elevada: 0 12px 48px rgba(0,0,0,0.2);
+            --radio: 12px;
+            --transicion: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e9 100%);
+            color: var(--negro);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--verde-oscuro) 0%, var(--verde-antioquia) 50%, var(--verde-claro) 100%);
+            padding: 1rem 2rem;
+            box-shadow: var(--sombra-elevada);
+            flex-shrink: 0;
+        }
+
+        .header-content {
+            max-width: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--dorado);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--verde-oscuro);
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+        }
+
+        .logo-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--blanco);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            font-size: 0.7rem;
+            color: var(--dorado-claro);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--radio);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            min-width: 80px;
+        }
+
+        .stat-item .number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dorado);
+            line-height: 1;
+        }
+
+        .stat-item .label {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.8);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.2rem;
+        }
+
+        /* Main Container */
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            overflow: hidden;
+        }
+
+        /* Controls Panel */
+        .controls-panel {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            box-shadow: var(--sombra);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-container {
+            position: relative;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+            border: 2px solid var(--gris-claro);
+            border-radius: var(--radio);
+            font-size: 0.95rem;
+            transition: var(--transicion);
+            background: var(--blanco);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--verde-claro);
+            box-shadow: 0 0 0 3px var(--dorado-suave);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gris-medio);
+            width: 18px;
+            height: 18px;
+        }
+
+        .filter-container {
+            flex-shrink: 0;
+        }
+
+        .filter-select {
+            padding: 0.75rem;
+            border: 2px solid var(--gris-claro);
+            border-radius: var(--radio);
+            background: var(--blanco);
+            min-width: 200px;
+            font-size: 0.95rem;
+            transition: var(--transicion);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--verde-claro);
+            box-shadow: 0 0 0 3px var(--dorado-suave);
+        }
+
+        /* Table Container */
+        .table-container {
+            flex: 1;
+            background: var(--blanco);
+            border-radius: var(--radio);
+            box-shadow: var(--sombra);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .table-header {
+            background: var(--verde-antioquia);
+            color: var(--blanco);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .table-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .table-info {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .table-wrapper {
+            flex: 1;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--verde-claro);
+            color: var(--blanco);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gris-claro);
+            font-size: 0.9rem;
+        }
+
+        tbody tr {
+            cursor: pointer;
+            transition: var(--transicion);
+        }
+
+        tbody tr:hover {
+            background: linear-gradient(90deg, var(--dorado-suave), transparent);
+        }
+
+        tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        tbody tr:nth-child(even):hover {
+            background: linear-gradient(90deg, var(--dorado-suave), rgba(212, 175, 55, 0.08));
+        }
+
+        .item-code {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: var(--verde-oscuro);
+            background: var(--dorado-claro);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .unit-badge {
+            background: var(--verde-claro);
+            color: var(--blanco);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .price {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: var(--verde-oscuro);
+            text-align: right;
+        }
+
+        .description {
+            color: var(--gris-oscuro);
+            line-height: 1.4;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transicion);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            max-width: 90vw;
+            max-height: 90vh;
+            width: 900px;
+            overflow: hidden;
+            box-shadow: var(--sombra-elevada);
+            transform: scale(0.9) translateY(-50px);
+            transition: var(--transicion);
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--verde-oscuro), var(--verde-antioquia));
+            color: var(--blanco);
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .modal-title {
+            flex: 1;
+        }
+
+        .modal-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-title p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .modal-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: var(--blanco);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: var(--transicion);
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .modal-body {
+            padding: 2rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .modal-section {
+            margin-bottom: 2rem;
+        }
+
+        .modal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--verde-oscuro);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--dorado-claro);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-item {
+            background: var(--gris-claro);
+            padding: 1rem;
+            border-radius: var(--radio);
+            text-align: center;
+        }
+
+        .detail-item .label {
+            font-size: 0.8rem;
+            color: var(--gris-medio);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-item .value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--verde-oscuro);
+        }
+
+        .detail-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .detail-table th {
+            background: var(--verde-claro);
+            color: var(--blanco);
+            padding: 0.75rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .detail-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--gris-claro);
+            font-size: 0.9rem;
+        }
+
+        .detail-table .numeric {
+            text-align: right;
+            font-family: 'Courier New', monospace;
+        }
+
+        .no-data {
+            text-align: center;
+            color: var(--gris-medio);
+            font-style: italic;
+            padding: 3rem;
+        }
+
+        /* Loading indicator */
+        .loading-indicator {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gris-medio);
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--gris-claro);
+            border-top: 3px solid var(--verde-claro);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header-stats {
+                gap: 0.5rem;
+            }
+
+            .stat-item {
+                padding: 0.4rem 0.8rem;
+                min-width: 70px;
+            }
+
+            .controls-row {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .search-container {
+                min-width: unset;
+            }
+
+            .filter-select {
+                min-width: unset;
+                width: 100%;
+            }
+
+            .modal {
+                width: 95vw;
+                margin: 1rem;
+            }
+
+            .modal-header {
+                padding: 1.5rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            th, td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .table-header {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 0.5rem;
+            }
+
+            header {
+                padding: 0.75rem 1rem;
+            }
+
+            .logo-text h1 {
+                font-size: 1.1rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+        }
+
+
+
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--radio);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transicion);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--verde-antioquia), var(--verde-claro));
+            color: var(--blanco);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: var(--sombra);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">PS</div>
+                <div class="logo-text">
+                    <h1>ProyectoSaris</h1>
+                    <span>Gobernación de Antioquia</span>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <div class="number" id="totalApus">0</div>
+                    <div class="label">Total APUs</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number" id="filteredCount">0</div>
+                    <div class="label">Mostrados</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number" id="subregionCount">0</div>
+                    <div class="label">Subregiones</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Controls -->
+        <div class="controls-panel">
+            <div class="controls-row">
+                <div class="search-container">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Buscar por código o descripción...">
+                </div>
+                <div class="filter-container">
+                    <select id="subregionFilter" class="filter-select">
+                        <option value="">Todas las subregiones</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <div class="table-title">APUs Disponibles</div>
+
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div class="table-info">Total: <span id="tableCount">0</span> elementos</div>
+                    <button class="btn btn-primary" id="downloadBtn" disabled style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+                        Descargar Excel (<span id="selectedCount">0</span>)
+                    </button>
+                    <button class="btn btn-primary" id="consolidatedBtn" disabled style="padding: 0.5rem 1rem; font-size: 0.85rem; margin-left: 0.5rem;">
+                        Listas Consolidadas (<span id="selectedCountConsolidated">0</span>)
+                    </button>
+                </div>
+
+            </div>
+            <div class="table-wrapper" id="tableWrapper">
+                <!-- Loading indicator -->
+                <div class="loading-indicator" id="loadingIndicator">
+                    <div class="loading-spinner"></div>
+                    <div style="font-size: 1.1rem; margin-bottom: 0.5rem;">Cargando APUs...</div>
+                    <div style="font-size: 0.9rem; opacity: 0.8;">Por favor espera un momento</div>
+                </div>
+                
+                <!-- Table -->
+                <table id="apuTable" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;"><input type="checkbox" id="selectAll" style="accent-color: var(--dorado);"></th>
+                            <th style="width: 80px;">Ítem</th>
+                            <th>Descripción</th>
+                            <th style="width: 100px;">Unidad</th>
+                            <th style="width: 120px;">Subregión</th>
+                            <th style="width: 140px; text-align: right;">Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="apuTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <h2 id="modalTitle"></h2>
+                    <p id="modalSubtitle"></p>
+                </div>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal de Vista Previa Consolidada -->
+    <div class="modal-overlay" id="consolidatedModalOverlay">
+        <div class="modal" style="max-width: 95vw; width: 1200px;">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <h2>Vista Previa - Listas Consolidadas</h2>
+                    <p>Elementos consolidados de los APUs seleccionados</p>
+                </div>
+                <button class="modal-close" id="consolidatedModalClose">&times;</button>
+            </div>
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto; padding: 1rem;">
+                <div id="consolidatedPreviewContent">
+                    <!-- El contenido se generará dinámicamente -->
+                </div>
+                <div style="text-align: center; margin-top: 2rem; padding: 1rem; border-top: 2px solid var(--gris-claro);">
+                    <button class="btn btn-primary" id="downloadConsolidatedBtn" style="margin-right: 1rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </svg>
+                        Descargar Excel
+                    </button>
+                    <button class="btn btn-secondary" id="cancelConsolidatedBtn">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        // ===== VARIABLES GLOBALES =====
+        let allAPUs = [];
+        let filteredAPUs = [];
+        let selectedAPUs = new Set();
+
+        // ===== DOM ELEMENTS =====
+        const searchInput = document.getElementById('searchInput');
+        const subregionFilter = document.getElementById('subregionFilter');
+        const apuTableBody = document.getElementById('apuTableBody');
+        const apuTable = document.getElementById('apuTable');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalClose = document.getElementById('modalClose');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalSubtitle = document.getElementById('modalSubtitle');
+        const modalBody = document.getElementById('modalBody');
+        const selectAll = document.getElementById('selectAll');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const consolidatedBtn = document.getElementById('consolidatedBtn');
+        const consolidatedModalOverlay = document.getElementById('consolidatedModalOverlay');
+        const consolidatedModalClose = document.getElementById('consolidatedModalClose');
+        const consolidatedPreviewContent = document.getElementById('consolidatedPreviewContent');
+        const downloadConsolidatedBtn = document.getElementById('downloadConsolidatedBtn');
+        const cancelConsolidatedBtn = document.getElementById('cancelConsolidatedBtn');
+
+
+
+        // ===== INITIALIZATION =====
+        async function loadJSONData() {
+            try {
+                console.log('Intentando cargar APUs_Estructurados.json...');
+                const response = await fetch('APUs_Estructurados.json');
+                
+                if (!response.ok) {
+                    throw new Error(`Error HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const jsonData = await response.json();
+                console.log('JSON cargado exitosamente:', Object.keys(jsonData).length + ' APUs');
+                
+                // Convertir datos JSON a formato interno
+                allAPUs = Object.entries(jsonData).map(([key, data], index) => ({
+                    id: index,
+                    item: key,
+                    description: data.descripcion || '',
+                    unit: data.unidad || 'N/A',
+                    subregion: data.subregion || 'Sin especificar',
+                    price: data.precio_unitario_total || 0,
+                    rawData: data
+                }));
+
+                filteredAPUs = [...allAPUs];
+                
+                // Ocultar loading y mostrar tabla
+                loadingIndicator.style.display = 'none';
+                apuTable.style.display = 'table';
+                
+                updateStats();
+                populateFilters();
+                renderTable();
+                
+            } catch (error) {
+                console.error('Error cargando el archivo JSON:', error);
+                
+                loadingIndicator.innerHTML = `
+                    <div style="color: #d32f2f;">
+                        <h3>Error al cargar los datos</h3>
+                        <p style="margin: 1rem 0;">${error.message}</p>
+                        <div style="font-size: 0.9rem; color: var(--gris-medio); background: #fff3e0; padding: 1rem; border-radius: 8px; text-align: left; max-width: 600px; margin: 0 auto;">
+                            <strong>Posibles soluciones:</strong>
+                            <ol style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                                <li>Asegúrate de que el archivo <code>APUs_Estructurados.json</code> esté en la misma carpeta que este HTML.</li>
+                                <li>Verifica que el archivo JSON tenga formato válido.</li>
+                                <li>Si estás probando localmente, usa un servidor web local (no abras el HTML directamente).</li>
+                                <li>Ejemplo de servidor local: <code>python -m http.server 8000</code></li>
+                            </ol>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ===== STATS UPDATE =====
+        function updateStats() {
+            document.getElementById('totalApus').textContent = allAPUs.length;
+            document.getElementById('filteredCount').textContent = filteredAPUs.length;
+            document.getElementById('tableCount').textContent = filteredAPUs.length;
+            
+            const subregions = new Set(allAPUs.map(apu => apu.subregion));
+            document.getElementById('subregionCount').textContent = subregions.size;
+        }
+
+        // ===== POPULATE FILTERS =====
+        function populateFilters() {
+            const subregions = [...new Set(allAPUs.map(apu => apu.subregion))].sort();
+            
+            subregionFilter.innerHTML = '<option value="">Todas las subregiones</option>';
+            subregions.forEach(subregion => {
+                const option = document.createElement('option');
+                option.value = subregion;
+                option.textContent = subregion;
+                subregionFilter.appendChild(option);
+            });
+        }
+
+        // ===== FILTER FUNCTIONS =====
+        function filterAPUs() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const selectedSubregion = subregionFilter.value;
+
+            filteredAPUs = allAPUs.filter(apu => {
+                const matchesSearch = !searchTerm || 
+                    apu.item.toLowerCase().includes(searchTerm) ||
+                    apu.description.toLowerCase().includes(searchTerm);
+                
+                const matchesSubregion = !selectedSubregion || apu.subregion === selectedSubregion;
+
+                return matchesSearch && matchesSubregion;
+            });
+
+            updateStats();
+            renderTable();
+        }
+
+        // ===== RENDER TABLE =====
+        function renderTable() {
+            apuTableBody.innerHTML = '';
+
+            if (filteredAPUs.length === 0) {
+                apuTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="no-data">
+                            <div>
+                                <strong>No se encontraron APUs</strong><br>
+                                <span style="font-size: 0.9rem; opacity: 0.8;">
+                                    Intenta con otros términos de búsqueda o filtros
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            filteredAPUs.forEach(apu => {
+                const row = document.createElement('tr');
+                row.dataset.id = apu.id;
+
+                row.innerHTML = `
+                    <td>
+                        <input type="checkbox" class="row-checkbox" data-id="${apu.id}" style="accent-color: var(--dorado);">
+                    </td>
+                    <td>
+                        <span class="item-code">${apu.item}</span>
+                    </td>
+                    <td>
+                        <span class="description">${apu.description.length > 80 ? apu.description.substring(0, 80) + '...' : apu.description}</span>
+                    </td>
+                    <td>
+                        <span class="unit-badge">${apu.unit}</span>
+                    </td>
+                    <td>${apu.subregion}</td>
+                    <td class="price">$${formatNumber(apu.price)}</td>
+                `;
+
+                apuTableBody.appendChild(row);
+            });
+        }
+
+        // ===== SHOW APU DETAIL =====
+        function showAPUDetail(id) {
+            const apu = allAPUs.find(a => a.id === id);
+            if (!apu) return;
+
+            modalTitle.textContent = `APU ${apu.item}`;
+            modalSubtitle.textContent = apu.description;
+
+            const data = apu.rawData;
+                        
+            let modalContent = `
+                <div class="modal-section" style="margin-bottom: 2rem;">
+                    <div class="section-title" style="background: var(--verde-claro); color: white; padding: 0.75rem; margin-bottom: 1rem; border-radius: 8px;">
+                        INFORMACIÓN GENERAL
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="background: var(--gris-claro);">
+                                    <th style="padding: 0.75rem; border: 1px solid #ddd; text-align: center;">Subregión</th>
+                                    <th style="padding: 0.75rem; border: 1px solid #ddd; text-align: center;">Unidad</th>
+                                    <th style="padding: 0.75rem; border: 1px solid #ddd; text-align: center;">Precio Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: center; font-weight: 600;">${apu.subregion}</td>
+                                    <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: center; font-weight: 600;">${apu.unit}</td>
+                                    <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: center; font-weight: 600; font-family: monospace; color: var(--verde-claro);">$${formatNumber(apu.price)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+            // Materiales
+            if (data.materiales && data.materiales.length > 0) {
+                const validMateriales = data.materiales.filter(item => 
+                    item.descripcion && item.descripcion !== 'ITEM' && 
+                    item.valor_unitario !== null && item.valor_unitario !== undefined
+                );
+                
+                if (validMateriales.length > 0) {
+                    const totalMateriales = validMateriales.reduce((sum, item) => sum + (item.valor_unitario || 0), 0);
+                    
+                    modalContent += `
+                        <div class="modal-section" style="margin-bottom: 2rem;">
+                            <div class="section-title" style="background: var(--verde-claro); color: white; padding: 0.75rem; margin-bottom: 1rem; border-radius: 8px;">
+                                MATERIALES (${validMateriales.length} elementos)
+                            </div>
+                            <div style="overflow-x: auto;">
+                                <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                    <thead>
+                                        <tr style="background: var(--gris-claro);">
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: left; min-width: 200px;">Descripción</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: center; width: 80px;">Unidad</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 100px;">Cantidad</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 120px;">Precio Unitario</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 120px;">Valor Unitario</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                    `;
+                    
+                    validMateriales.forEach(item => {
+                        modalContent += `
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 0.5rem; border: 1px solid #ddd;">${item.descripcion}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: center;">${item.unidad || 'N/A'}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">${formatNumber(item.cantidad)}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(item.precio_tarifa)}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace; font-weight: 600;">$${formatNumber(item.valor_unitario)}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    modalContent += `
+                                    </tbody>
+                                    <tfoot>
+                                        <tr style="background: var(--dorado-suave); font-weight: bold;">
+                                            <td colspan="4" style="padding: 0.75rem; border: 1px solid #ddd; text-align: right;">TOTAL MATERIALES:</td>
+                                            <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(totalMateriales)}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            // Equipos
+            if (data.equipos && data.equipos.length > 0) {
+                const validEquipos = data.equipos.filter(item => 
+                    item.descripcion && item.descripcion !== 'ITEM' && 
+                    item.valor_unitario !== null && item.valor_unitario !== undefined
+                );
+                
+                if (validEquipos.length > 0) {
+                    const totalEquipos = validEquipos.reduce((sum, item) => sum + (item.valor_unitario || 0), 0);
+                    
+                    modalContent += `
+                        <div class="modal-section" style="margin-bottom: 2rem;">
+                            <div class="section-title" style="background: var(--verde-claro); color: white; padding: 0.75rem; margin-bottom: 1rem; border-radius: 8px;">
+                                EQUIPOS (${validEquipos.length} elementos)
+                            </div>
+                            <div style="overflow-x: auto;">
+                                <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                    <thead>
+                                        <tr style="background: var(--gris-claro);">
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: left; min-width: 200px;">Descripción</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: center; width: 80px;">Tipo</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 100px;">Tarifa/Hora-Día</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 120px;">Rendimiento</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 120px;">Valor Unitario</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                    `;
+                    
+                    validEquipos.forEach(item => {
+                        modalContent += `
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 0.5rem; border: 1px solid #ddd;">${item.descripcion}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: center;"></td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(item.cantidad)}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">${formatNumber(item.precio_tarifa)}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace; font-weight: 600;">$${formatNumber(item.valor_unitario)}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    modalContent += `
+                                    </tbody>
+                                    <tfoot>
+                                        <tr style="background: var(--dorado-suave); font-weight: bold;">
+                                            <td colspan="4" style="padding: 0.75rem; border: 1px solid #ddd; text-align: right;">TOTAL EQUIPOS:</td>
+                                            <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(totalEquipos)}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            // Mano de obra
+            if (data.mano_obra && data.mano_obra.length > 0) {
+                const validManoObra = data.mano_obra.filter(item => 
+                    item.descripcion && item.descripcion !== 'ITEM' && 
+                    item.valor_unitario !== null && item.valor_unitario !== undefined
+                );
+                
+                if (validManoObra.length > 0) {
+                    const totalManoObra = validManoObra.reduce((sum, item) => sum + (item.valor_unitario || 0), 0);
+                    
+                    modalContent += `
+                        <div class="modal-section" style="margin-bottom: 2rem;">
+                            <div class="section-title" style="background: var(--verde-claro); color: white; padding: 0.75rem; margin-bottom: 1rem; border-radius: 8px;">
+                                MANO DE OBRA (${validManoObra.length} elementos)
+                            </div>
+                            <div style="overflow-x: auto;">
+                                <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                    <thead>
+                                        <tr style="background: var(--gris-claro);">
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: left; min-width: 200px;">Descripción</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: center; width: 80px;">Jornal</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 100px;">Jornal Total (+ Prestaciones)</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 120px;">Rendimiento</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 120px;">Valor Unitario</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                    `;
+                    
+                    validManoObra.forEach(item => {
+                        modalContent += `
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 0.5rem; border: 1px solid #ddd;">${item.descripcion}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: center;">$${formatNumber(item.unidad) || 'N/A'}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(item.cantidad)}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">${formatNumber(item.precio_tarifa)}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace; font-weight: 600;">$${formatNumber(item.valor_unitario)}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    modalContent += `
+                                    </tbody>
+                                    <tfoot>
+                                        <tr style="background: var(--dorado-suave); font-weight: bold;">
+                                            <td colspan="4" style="padding: 0.75rem; border: 1px solid #ddd; text-align: right;">TOTAL MANO DE OBRA:</td>
+                                            <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(totalManoObra)}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            // Transporte
+            if (data.transporte && data.transporte.length > 0) {
+                const validTransporte = data.transporte.filter(item => 
+                    item.descripcion && item.descripcion !== 'ITEM' && 
+                    item.valor_unitario !== null && item.valor_unitario !== undefined
+                );
+                
+                if (validTransporte.length > 0) {
+                    const totalTransporte = validTransporte.reduce((sum, item) => sum + (item.valor_unitario || 0), 0);
+                    
+                    modalContent += `
+                        <div class="modal-section" style="margin-bottom: 2rem;">
+                            <div class="section-title" style="background: var(--verde-claro); color: white; padding: 0.75rem; margin-bottom: 1rem; border-radius: 8px;">
+                                TRANSPORTE (${validTransporte.length} elementos)
+                            </div>
+                            <div style="overflow-x: auto;">
+                                <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                    <thead>
+                                        <tr style="background: var(--gris-claro);">
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: left; min-width: 200px;">Descripción</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: center; width: 80px;">Distancia</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 100px;">Cantidad (m3-Km / ton-Km)</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 120px;">Tarifa</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 120px;">Valor Unitario</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                    `;
+                    
+                    validTransporte.forEach(item => {
+                        modalContent += `
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 0.5rem; border: 1px solid #ddd;">${item.descripcion}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: center;">${item.unidad || 'N/A'}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">${formatNumber(item.cantidad)}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(item.precio_tarifa)}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace; font-weight: 600;">$${formatNumber(item.valor_unitario)}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    modalContent += `
+                                    </tbody>
+                                    <tfoot>
+                                        <tr style="background: var(--dorado-suave); font-weight: bold;">
+                                            <td colspan="4" style="padding: 0.75rem; border: 1px solid #ddd; text-align: right;">TOTAL TRANSPORTE:</td>
+                                            <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(totalTransporte)}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            modalBody.innerHTML = modalContent;
+            modalOverlay.classList.add('active');
+
+        }
+
+        // ===== RENDER DETAIL SECTION =====
+        function renderDetailSection(title, data) {
+            const validData = data.filter(item => 
+                item.descripcion && 
+                item.descripcion !== 'ITEM' && 
+                item.valor_unitario !== null && 
+                item.valor_unitario !== undefined
+            );
+
+            if (validData.length === 0) {
+                return `
+                    <div class="modal-section">
+                        <div class="section-title">${title}</div>
+                        <div class="no-data">No hay ${title.toLowerCase()} registrados</div>
+                    </div>
+                `;
+            }
+
+            let tableRows = validData.map(item => `
+                <tr>
+                    <td>${item.descripcion}</td>
+                    <td>${item.unidad || 'N/A'}</td>
+                    <td class="numeric">${formatNumber(item.cantidad)}</td>
+                    <td class="numeric">$${formatNumber(item.precio_tarifa)}</td>
+                    <td class="numeric">$${formatNumber(item.valor_unitario)}</td>
+                </tr>
+            `).join('');
+
+            return `
+                <div class="modal-section">
+                    <div class="section-title">${title}</div>
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>Unidad</th>
+                                <th class="numeric">Cantidad</th>
+                                <th class="numeric">Precio Tarifa</th>
+                                <th class="numeric">Valor Unitario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${tableRows}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // ===== UTILITY FUNCTIONS =====
+        function formatNumber(number) {
+            if (number === null || number === undefined) return 'N/A';
+            return new Intl.NumberFormat('es-CO').format(number);
+        }
+
+        // ===== EVENT LISTENERS =====
+        searchInput.addEventListener('input', filterAPUs);
+        subregionFilter.addEventListener('change', filterAPUs);
+
+        apuTableBody.addEventListener('click', (e) => {
+            // Si es un checkbox, no hacer nada (ya se maneja en el evento 'change')
+            if (e.target.type === 'checkbox') return;
+            
+            const row = e.target.closest('tr');
+            if (!row || !row.dataset.id) return;
+            const id = parseInt(row.dataset.id);
+            showAPUDetail(id);
+        });
+
+        modalClose.addEventListener('click', () => {
+            modalOverlay.classList.remove('active');
+        });
+
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                modalOverlay.classList.remove('active');
+            }
+        });
+
+        consolidatedBtn.addEventListener('click', showConsolidatedPreview);
+
+        // Select all functionality
+        selectAll.addEventListener('change', (e) => {
+            const checkboxes = document.querySelectorAll('.row-checkbox');
+            checkboxes.forEach(cb => {
+                cb.checked = e.target.checked;
+                const id = parseInt(cb.dataset.id);
+                if (e.target.checked) {
+                    selectedAPUs.add(id);
+                } else {
+                    selectedAPUs.delete(id);
+                }
+            });
+            updateSelectionCount();
+        });
+
+        // Individual checkbox handling
+        apuTableBody.addEventListener('change', (e) => {
+            if (e.target.classList.contains('row-checkbox')) {
+                const id = parseInt(e.target.dataset.id);
+                if (e.target.checked) {
+                    selectedAPUs.add(id);
+                } else {
+                    selectedAPUs.delete(id);
+                }
+                updateSelectionCount();
+                
+                // Update select all checkbox
+                const totalVisible = document.querySelectorAll('.row-checkbox').length;
+                const totalSelected = document.querySelectorAll('.row-checkbox:checked').length;
+                selectAll.indeterminate = totalSelected > 0 && totalSelected < totalVisible;
+                selectAll.checked = totalSelected === totalVisible && totalVisible > 0;
+            }
+        });
+
+        // Download button
+        downloadBtn.addEventListener('click', downloadExcel);
+
+        // Event listeners para modal consolidado
+        consolidatedModalClose.addEventListener('click', () => {
+            consolidatedModalOverlay.classList.remove('active');
+        });
+
+        cancelConsolidatedBtn.addEventListener('click', () => {
+            consolidatedModalOverlay.classList.remove('active');
+        });
+
+        downloadConsolidatedBtn.addEventListener('click', () => {
+            consolidatedModalOverlay.classList.remove('active');
+            exportConsolidatedLists();
+        });
+
+        consolidatedModalOverlay.addEventListener('click', (e) => {
+            if (e.target === consolidatedModalOverlay) {
+                consolidatedModalOverlay.classList.remove('active');
+            }
+        });
+
+        // Actualizar contador de seleccionados
+        function updateSelectionCount() {
+            const count = selectedAPUs.size;
+            document.getElementById('selectedCount').textContent = count;
+            downloadBtn.disabled = count === 0;
+            document.getElementById('selectedCountConsolidated').textContent = count;
+            consolidatedBtn.disabled = count === 0;
+        }
+
+        // Función de descarga Excel
+        function downloadExcel() {
+            if (selectedAPUs.size === 0) return;
+            
+            const selectedData = Array.from(selectedAPUs).map(id => {
+                const apu = allAPUs.find(a => a.id === id);
+                return apu ? apu.rawData : null;
+            }).filter(Boolean);
+            
+            const wb = XLSX.utils.book_new();
+            
+            selectedData.forEach((data, index) => {
+                const apu = allAPUs.find(a => a.rawData === data);
+                const sheetData = [];
+                
+                // Header principal - ÍTEM, DESCRIPCIÓN, UNIDAD
+                sheetData.push(['ÍTEM', 'DESCRIPCIÓN', '', '', '', '', '', '', 'UNIDAD']);
+                sheetData.push([apu.item, data.descripcion || '', '', '', '', '', '', '', data.unidad || '']);
+                sheetData.push(['', '', '', '', '', '', '', '', '']); // Línea vacía
+                
+                // I. EQUIPO
+                if (data.equipos && data.equipos.length > 0) {
+                    const validEquipos = data.equipos.filter(item => item.descripcion && item.descripcion !== 'ITEM');
+                    if (validEquipos.length > 0) {
+                        sheetData.push(['I. EQUIPO', '', '', '', '', '', '', '', '']);
+                        sheetData.push(['Descripción', '', '', '', 'Marca', 'Tipo', 'Tarifa/Hora-Día', 'Rendimiento', 'Valor-Unit']);
+                        
+                        let subtotalEquipos = 0;
+                        validEquipos.forEach(item => {
+                            const valorUnit = item.valor_unitario || 0;
+                            subtotalEquipos += valorUnit;
+                            sheetData.push([
+                                item.descripcion || '','',
+                                '', '', // Espacios para combinar descripción
+                                '', // Marca
+                                '', // Tipo
+                                `$${formatNumber(item.precio_tarifa)}`,
+                                formatNumber(item.cantidad),
+                                `$${formatNumber(valorUnit)}`
+                            ]);
+                        });
+                        sheetData.push(['', '', '', '', '', '', '', 'Sub-Total', `$${formatNumber(subtotalEquipos)}`]);
+                        sheetData.push(['', '', '', '', '', '', '', '', '']); // Línea vacía
+                    }
+                }
+                
+                // II. MATERIALES
+                if (data.materiales && data.materiales.length > 0) {
+                    const validMateriales = data.materiales.filter(item => item.descripcion && item.descripcion !== 'ITEM');
+                    if (validMateriales.length > 0) {
+                        sheetData.push(['II. MATERIALES', '', '', '', '', '', '', '', '']);
+                        sheetData.push(['Descripción', '', '', '', '', 'Unidad', 'Cantidad', 'Precio-Unit', 'Valor-Unit', '']);
+                        
+                        let subtotalMateriales = 0;
+                        validMateriales.forEach(item => {
+                            const valorUnit = item.valor_unitario || 0;
+                            subtotalMateriales += valorUnit;
+                            sheetData.push([
+                                item.descripcion || '','',
+                                '', '', '', // Espacios para combinar descripción
+                                item.unidad || '',
+                                formatNumber(item.cantidad),
+                                `$${formatNumber(item.precio_tarifa)}`,
+                                `$${formatNumber(valorUnit)}`
+                            ]);
+                        });
+                        sheetData.push(['', '', '', '', '', '',  '', 'Sub-Total', `$${formatNumber(subtotalMateriales)}`, '']);
+                        sheetData.push(['', '', '', '', '', '', '', '', '']); // Línea vacía
+                    }
+                }
+                
+                // III. TRANSPORTES
+                if (data.transporte && data.transporte.length > 0) {
+                    const validTransportes = data.transporte.filter(item => item.descripcion && item.descripcion !== 'ITEM');
+                    if (validTransportes.length > 0) {
+                        sheetData.push(['III. TRANSPORTES', '', '', '', '', '', '', '', '']);
+                        sheetData.push(['Descripción', '', 'Volumen (m3) - Peso (ton)', 'Distancia', 'Cantidad (m3-Km / ton-Km)', 'Tarifa', 'Valor-Unit', '', '']);
+                        
+                        let subtotalTransportes = 0;
+                        validTransportes.forEach(item => {
+                            const valorUnit = item.valor_unitario || 0;
+                            subtotalTransportes += valorUnit;
+                            sheetData.push([
+                                item.descripcion || '',
+                                '', // Espacio para combinar descripción
+                                '', // Volumen
+                                '', // Distancia
+                                formatNumber(item.cantidad),
+                                `$${formatNumber(item.precio_tarifa)}`,
+                                `$${formatNumber(valorUnit)}`,
+                                '', ''
+                            ]);
+                        });
+                        sheetData.push(['', '', '', '', '', 'Sub-Total', `$${formatNumber(subtotalTransportes)}`]);
+                        sheetData.push(['', '', '', '', '', '', '', '']); // Línea vacía
+                    }
+                }
+                
+                // IV. MANO DE OBRA
+                if (data.mano_obra && data.mano_obra.length > 0) {
+                    const validManoObra = data.mano_obra.filter(item => item.descripcion && item.descripcion !== 'ITEM');
+                    if (validManoObra.length > 0) {
+                        sheetData.push(['IV. MANO DE OBRA', '', '', '', '', '', '', '', '']);
+                        sheetData.push(['Descripción', '', '', '', '', 'Jornal', 'Jornal Total (+ Prestaciones)', 'Rendimiento', 'Valor-Unit']);
+                        
+                        let subtotalManoObra = 0;
+                        validManoObra.forEach(item => {
+                            const valorUnit = item.valor_unitario || 0;
+                            subtotalManoObra += valorUnit;
+                            sheetData.push([
+                                item.descripcion || '','','',
+                                '', '', // Espacios para combinar descripción
+                                `$${formatNumber(item.unidad)}`,
+                                `$${formatNumber(item.cantidad)}`,
+                                formatNumber(item.precio_tarifa),
+                                `$${formatNumber(valorUnit)}`,
+                                '', ''
+                            ]);
+                        });
+                        sheetData.push(['', '', '', '', '', '', '', 'Sub-Total', `$${formatNumber(subtotalManoObra)}`]);
+                        sheetData.push(['', '', '', '', '', '', '', '', '']); // Línea vacía
+                    }
+                }
+                
+                // Total Costo Directo
+                sheetData.push(['', '', '', '', '', '', '', 'Total Costo Directo', `$${formatNumber(data.precio_unitario_total)}`]);
+                sheetData.push(['', '', '', '', '', '', '', '', '']); // Línea vacía
+                
+                // IV. COSTOS INDIRECTOS
+                sheetData.push(['IV. COSTOS INDIRECTOS', '', '', '', '', '', '', '', '']);
+                sheetData.push(['Descripción', '', '', '', '', '', '', 'Porcentaje', 'Valor Total', '']);
+                sheetData.push(['ADMINISTRACION', '', '', '', '', '', '', '0,00%', '$0', '']);
+                sheetData.push(['UTILIDAD', '', '', '', '', '', '', '0,00%', '$0', '']);
+                sheetData.push(['IMPREVISTOS', '', '', '', '', '', '', '0,00%', '$0', '']);
+                sheetData.push(['Total sobrecostos', '', '', '', '', '', '', '', '$0']);
+                sheetData.push(['', '', '', '', '', '', 'Sub-Total', '0,00%', '$0']);
+                sheetData.push(['', '', '', '', '', '', '', '', '']);
+                
+                // Precio unitario total aproximado al peso
+                sheetData.push(['', '', '', '', '','','', 'Precio unitario total aproximado al peso', `$${formatNumber(data.precio_unitario_total)}`, '']);
+                
+                // Crear hoja
+                const ws = XLSX.utils.aoa_to_sheet(sheetData);
+                
+                // Desactivar líneas de cuadrícula
+                if (!ws['!views']) ws['!views'] = [{}];
+                ws['!views'][0] = { showGridLines: false };
+                
+                // Aplicar combinaciones de celdas
+                ws['!merges'] = [
+                    // Header principal
+                    { s: { r: 0, c: 1 }, e: { r: 0, c: 7 } }, // DESCRIPCIÓN
+                    { s: { r: 1, c: 1 }, e: { r: 1, c: 7 } }, // Descripción del APU (B a H)
+                    
+                    // Títulos de secciones y descripciones de equipos
+                    ...sheetData.map((row, idx) => {
+                        if (row[0] && row[0].includes('I. EQUIPO')) {
+                            return { s: { r: idx, c: 0 }, e: { r: idx, c: 8 } }; // Toda la fila
+                        }
+                        if (row[0] && (row[0].includes('II. MATERIALES') || 
+                            row[0].includes('III. TRANSPORTES') || row[0].includes('IV. MANO DE OBRA') || 
+                            row[0].includes('IV. COSTOS INDIRECTOS'))) {
+                            return { s: { r: idx, c: 0 }, e: { r: idx, c: 8 } }; // Toda la fila
+                        }
+                        
+                        // Combinar descripciones de equipos (A a C)
+                        if (row[0] && row[0] !== 'Descripción' && row[0] !== '' && idx > 0) {
+                            const equipoSectionStart = sheetData.findIndex(r => r[0] && r[0].includes('I. EQUIPO'));
+                            const materialesSectionStart = sheetData.findIndex(r => r[0] && r[0].includes('II. MATERIALES'));
+                            
+                            if (equipoSectionStart !== -1 && idx > equipoSectionStart && 
+                                (materialesSectionStart === -1 || idx < materialesSectionStart)) {
+                                return { s: { r: idx, c: 0 }, e: { r: idx, c: 2 } };
+                            }
+                            
+                            // Combinar descripciones de materiales (A a D)
+                            const transportesSectionStart = sheetData.findIndex(r => r[0] && r[0].includes('III. TRANSPORTES'));
+                            if (materialesSectionStart !== -1 && idx > materialesSectionStart && 
+                                (transportesSectionStart === -1 || idx < transportesSectionStart)) {
+                                return { s: { r: idx, c: 0 }, e: { r: idx, c: 3 } };
+                            }
+                            
+                            // Combinar descripciones de transportes (A a B)
+                            const manoObraSectionStart = sheetData.findIndex(r => r[0] && r[0].includes('IV. MANO DE OBRA'));
+                            if (transportesSectionStart !== -1 && idx > transportesSectionStart && 
+                                (manoObraSectionStart === -1 || idx < manoObraSectionStart)) {
+                                return { s: { r: idx, c: 0 }, e: { r: idx, c: 1 } };
+                            }
+                            
+                            // Combinar descripciones de mano de obra (A a C)
+                            const costosIndirectosStart = sheetData.findIndex(r => r[0] && r[0].includes('IV. COSTOS INDIRECTOS'));
+                            if (manoObraSectionStart !== -1 && idx > manoObraSectionStart && 
+                                (costosIndirectosStart === -1 || idx < costosIndirectosStart)) {
+                                return { s: { r: idx, c: 0 }, e: { r: idx, c: 2 } };
+                            }
+                        }
+                        
+                        return null;
+                    }).filter(Boolean)
+                ];
+                
+                // Aplicar estilos
+                const cellStyle = (font = {}, fill = null, alignment = {}, border = null) => ({
+                    font: { name: "Arial", sz: 10, ...font },
+                    fill: fill ? { fgColor: { rgb: fill } } : undefined,
+                    alignment: { horizontal: "center", vertical: "center", ...alignment },
+                    border: border || {
+                        top: { style: "thin", color: { rgb: "000000" } },
+                        bottom: { style: "thin", color: { rgb: "000000" } },
+                        left: { style: "thin", color: { rgb: "000000" } },
+                        right: { style: "thin", color: { rgb: "000000" } }
+                    }
+                });
+                
+                // Aplicar estilos a celdas específicas
+                sheetData.forEach((row, rowIdx) => {
+                    row.forEach((cell, colIdx) => {
+                        const cellRef = XLSX.utils.encode_cell({ r: rowIdx, c: colIdx });
+                        
+                        // Header principal
+                        if (rowIdx === 0 || rowIdx === 1) {
+                            ws[cellRef] = { 
+                                ...ws[cellRef], 
+                                s: cellStyle({ bold: true }, "D9D9D9", { horizontal: "center" })
+                            };
+                        }
+                        
+                        // Títulos de secciones
+                        if (cell && (cell.includes('I. ') || cell.includes('II. ') || 
+                            cell.includes('III. ') || cell.includes('IV. '))) {
+                            ws[cellRef] = { 
+                                ...ws[cellRef], 
+                                s: cellStyle({ bold: true }, "F2F2F2", { horizontal: "left" })
+                            };
+                        }
+                        
+                        // Headers de tablas
+                        if (cell === 'Descripción' || cell === 'Marca' || cell === 'Tipo' || 
+                            cell === 'Unidad' || cell === 'Cantidad' || cell === 'Precio-Unit' || 
+                            cell === 'Valor-Unit' || cell === 'Tarifa/Hora-Día' || cell === 'Rendimiento' ||
+                            cell === 'Jornal' || cell === 'Porcentaje' || cell === 'Valor Total') {
+                            ws[cellRef] = { 
+                                ...ws[cellRef], 
+                                s: cellStyle({ bold: true }, "D9D9D9", { horizontal: "center" })
+                            };
+                        }
+                        
+                        // Subtotales
+                        if (cell && (cell.includes('Sub-Total') || cell.includes('Total Costo Directo'))) {
+                            ws[cellRef] = { 
+                                ...ws[cellRef], 
+                                s: cellStyle({ bold: true }, null, { horizontal: "right" })
+                            };
+                        }
+                        
+                        // Precio final
+                        if (cell && cell.includes('Precio unitario total aproximado al peso')) {
+                            ws[cellRef] = { 
+                                ...ws[cellRef], 
+                                s: cellStyle({ bold: true }, "FFFF99", { horizontal: "right" })
+                            };
+                        }
+                    });
+                });
+                
+                // Configurar anchos de columna
+                ws['!cols'] = [
+                    {wch: 12}, {wch: 12}, {wch: 12}, {wch: 12}, {wch: 12}, 
+                    {wch: 12}, {wch: 12}, {wch: 12}, {wch: 12}
+                ];
+                
+
+                ws['!rows'] = [
+                    { hpt: 60 }, // Fila 2 (ítem y descripción) - altura aumentada
+                    ...Array(sheetData.length - 3).fill({ hpt: 20 }) // Resto de filas altura normal
+                ];
+
+                // Nombre de la hoja
+                const sheetName = `APU_${apu.item}`.substring(0, 31).replace(/[\\\/\?\*\[\]:]/g, '_');
+                XLSX.utils.book_append_sheet(wb, ws, sheetName);
+            });
+            
+            // ========== AGREGAR LISTAS CONSOLIDADAS ==========
+            
+            // Función para consolidar elementos
+            function consolidateElements(category) {
+                const consolidated = {};
+                
+                // Mapear datos con códigos de APU
+                const selectedDataWithCodes = Array.from(selectedAPUs).map(id => {
+                    const apu = allAPUs.find(a => a.id === id);
+                    return apu ? { codigo: apu.item, data: apu.rawData } : null;
+                }).filter(Boolean);
+                
+                selectedDataWithCodes.forEach(({ codigo, data }) => {
+                    const elements = data[category] || [];
+                    elements.forEach(item => {
+                        if (!item.descripcion || item.descripcion === 'ITEM') return;
+                        
+                        const key = `${item.descripcion}_${item.unidad}_${item.precio_tarifa}`;
+                        
+                        if (!consolidated[key]) {
+                            consolidated[key] = {
+                                descripcion: item.descripcion,
+                                unidad: item.unidad || 'N/A',
+                                cantidad: 0,
+                                precio_tarifa: item.precio_tarifa || 0,
+                                valor_total: 0,
+                                apus: new Set(),
+                                precio_unitario_promedio: item.precio_tarifa || 0
+                            };
+                        }
+                        
+                        consolidated[key].cantidad += (item.cantidad || 0);
+                        consolidated[key].valor_total += (item.valor_unitario || 0);
+                        consolidated[key].apus.add(codigo);
+                    });
+                });
+                
+                return Object.values(consolidated).map(item => ({
+                    ...item,
+                    apus: Array.from(item.apus).sort().join(', '),
+                    frecuencia: item.apus.size
+                })).sort((a, b) => a.descripcion.localeCompare(b.descripcion));
+            }
+            
+            // Crear listas consolidadas
+            const categories = [
+                { name: 'materiales', title: 'LISTA_MATERIALES' },
+                { name: 'equipos', title: 'LISTA_EQUIPOS' },
+                { name: 'mano_obra', title: 'LISTA_MANO_OBRA' },
+                { name: 'transporte', title: 'LISTA_TRANSPORTES' },
+                { name: 'matrices', title: 'LISTA_MATRICES' },
+                { name: 'trabajos', title: 'LISTA_TRABAJOS' }
+            ];
+            
+            let resumenData = [];
+            
+            categories.forEach(({ name, title }) => {
+                const consolidated = consolidateElements(name);
+                
+                if (consolidated.length > 0) {
+                    // Crear hoja para esta categoría
+                    const sheetData = [];
+                    
+                    // Header
+                    sheetData.push([title, '', '', '', '', '', '']);
+                    sheetData.push(['', '', '', '', '', '', '']);
+                    sheetData.push(['Descripción', 'Unidad', 'Cantidad Total', 'Precio Unit.', 'Valor Total', 'APUs que lo usan', 'Frecuencia']);
+                    
+                    let totalValor = 0;
+                    consolidated.forEach(item => {
+                        totalValor += item.valor_total;
+                        sheetData.push([
+                            item.descripcion,
+                            item.unidad,
+                            formatNumber(item.cantidad),
+                            `$${formatNumber(item.precio_unitario_promedio)}`,
+                            `$${formatNumber(item.valor_total)}`,
+                            item.apus,
+                            item.frecuencia
+                        ]);
+                    });
+                    
+                    // Total
+                    sheetData.push(['', '', '', 'TOTAL:', `$${formatNumber(totalValor)}`, '', '']);
+                    
+                    // Crear worksheet
+                    const ws = XLSX.utils.aoa_to_sheet(sheetData);
+                    
+                    // Desactivar líneas de cuadrícula
+                    if (!ws['!views']) ws['!views'] = [{}];
+                    ws['!views'][0] = { showGridLines: false };
+                    
+                    // Aplicar estilos
+                    const headerStyle = {
+                        font: { bold: true, sz: 12 },
+                        fill: { fgColor: { rgb: "D9D9D9" } },
+                        alignment: { horizontal: "center", vertical: "center" }
+                    };
+                    
+                    const titleStyle = {
+                        font: { bold: true, sz: 14 },
+                        fill: { fgColor: { rgb: "4F81BD" } },
+                        alignment: { horizontal: "center", vertical: "center" }
+                    };
+                    
+                    // Aplicar estilos
+                    ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1'].forEach(cell => {
+                        if (!ws[cell]) ws[cell] = { v: "" };
+                        ws[cell].s = titleStyle;
+                    });
+                    
+                    ['A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3'].forEach(cell => {
+                        if (!ws[cell]) ws[cell] = { v: "" };
+                        ws[cell].s = headerStyle;
+                    });
+                    
+                    // Combinar título
+                    ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 6 } }];
+                    
+                    // Configurar anchos
+                    ws['!cols'] = [
+                        {wch: 45}, {wch: 12}, {wch: 15}, {wch: 15}, 
+                        {wch: 15}, {wch: 25}, {wch: 12}
+                    ];
+                    
+                    XLSX.utils.book_append_sheet(wb, ws, title);
+                    
+                    resumenData.push({
+                        categoria: title,
+                        elementos: consolidated.length,
+                        valor_total: totalValor
+                    });
+                }
+            });
+            
+            // Crear hoja de resumen
+            if (resumenData.length > 0) {
+                const resumenSheet = [];
+                resumenSheet.push(['RESUMEN CONSOLIDADO', '', '', '']);
+                resumenSheet.push(['', '', '', '']);
+                resumenSheet.push(['Categoría', 'Elementos', 'Valor Total', 'Porcentaje']);
+                
+                const totalGeneral = resumenData.reduce((sum, item) => sum + item.valor_total, 0);
+                
+                resumenData.forEach(item => {
+                    const porcentaje = totalGeneral > 0 ? (item.valor_total / totalGeneral * 100).toFixed(2) : 0;
+                    resumenSheet.push([
+                        item.categoria,
+                        item.elementos,
+                        `$${formatNumber(item.valor_total)}`,
+                        `${porcentaje}%`
+                    ]);
+                });
+                
+                resumenSheet.push(['TOTAL GENERAL', '', `$${formatNumber(totalGeneral)}`, '100%']);
+                
+                const wsResumen = XLSX.utils.aoa_to_sheet(resumenSheet);
+                
+                if (!wsResumen['!views']) wsResumen['!views'] = [{}];
+                wsResumen['!views'][0] = { showGridLines: false };
+                
+                wsResumen['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 3 } }];
+                wsResumen['!cols'] = [{wch: 20}, {wch: 15}, {wch: 20}, {wch: 15}];
+                
+                XLSX.utils.book_append_sheet(wb, wsResumen, 'RESUMEN_CONSOLIDADO');
+            }
+            
+            // ========== FIN LISTAS CONSOLIDADAS ==========
+            
+            // Descargar archivo
+            XLSX.writeFile(wb, `APUs_Seleccionados_${new Date().toISOString().split('T')[0]}.xlsx`);
+        }
+
+
+
+        // Función para mostrar vista previa consolidada
+        function showConsolidatedPreview() {
+            if (selectedAPUs.size === 0) return;
+            
+            const selectedData = Array.from(selectedAPUs).map(id => {
+                const apu = allAPUs.find(a => a.id === id);
+                return apu ? { codigo: apu.item, data: apu.rawData } : null;
+            }).filter(Boolean);
+            
+            // Función para consolidar elementos (misma que en exportConsolidatedLists)
+            function consolidateElements(category) {
+                const consolidated = {};
+                
+                selectedData.forEach(({ codigo, data }) => {
+                    const elements = data[category] || [];
+                    elements.forEach(item => {
+                        if (!item.descripcion || item.descripcion === 'ITEM') return;
+                        
+                        const key = `${item.descripcion}_${item.unidad}_${item.precio_tarifa}`;
+                        
+                        if (!consolidated[key]) {
+                            consolidated[key] = {
+                                descripcion: item.descripcion,
+                                unidad: item.unidad || 'N/A',
+                                cantidad: 0,
+                                precio_tarifa: item.precio_tarifa || 0,
+                                valor_total: 0,
+                                apus: new Set(),
+                                precio_unitario_promedio: item.precio_tarifa || 0
+                            };
+                        }
+                        
+                        consolidated[key].cantidad += (item.cantidad || 0);
+                        consolidated[key].valor_total += (item.valor_unitario || 0);
+                        consolidated[key].apus.add(codigo);
+                    });
+                });
+                
+                return Object.values(consolidated).map(item => ({
+                    ...item,
+                    apus: Array.from(item.apus).sort().join(', '),
+                    frecuencia: item.apus.size
+                })).sort((a, b) => a.descripcion.localeCompare(b.descripcion));
+            }
+            
+            // Generar contenido HTML para vista previa
+            const categories = [
+                { name: 'materiales', title: 'MATERIALES' },
+                { name: 'equipos', title: 'EQUIPOS' },
+                { name: 'mano_obra', title: 'MANO DE OBRA' },
+                { name: 'transporte', title: 'TRANSPORTES' },
+                { name: 'matrices', title: 'MATRICES' },
+                { name: 'trabajos', title: 'TRABAJOS' }
+            ];
+            
+            let previewHTML = '';
+            let resumenData = [];
+            
+            categories.forEach(({ name, title }) => {
+                const consolidated = consolidateElements(name);
+                
+                if (consolidated.length > 0) {
+                    let totalValor = consolidated.reduce((sum, item) => sum + item.valor_total, 0);
+                    
+                    previewHTML += `
+                        <div class="modal-section" style="margin-bottom: 2rem;">
+                            <div class="section-title" style="background: var(--verde-claro); color: white; padding: 0.75rem; margin-bottom: 1rem; border-radius: 8px;">
+                                ${title} (${consolidated.length} elementos)
+                            </div>
+                            <div style="overflow-x: auto;">
+                                <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                    <thead>
+                                        <tr style="background: var(--gris-claro);">
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: left; min-width: 200px;">Descripción</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: center; width: 80px;">Unidad</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 100px;">Cantidad</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 110px;">Precio Unit.</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 120px;">Valor Total</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: center; width: 80px;">Frecuencia</th>
+                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: left; min-width: 120px;">APUs</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                    `;
+                    
+                    consolidated.forEach(item => {
+                        previewHTML += `
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 0.5rem; border: 1px solid #ddd;">${item.descripcion}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: center;">${item.unidad}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">${formatNumber(item.cantidad)}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(item.precio_unitario_promedio)}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace; font-weight: 600;">$${formatNumber(item.valor_total)}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: center;">${item.frecuencia}</td>
+                                <td style="padding: 0.5rem; border: 1px solid #ddd; font-size: 0.8rem;">${item.apus}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    previewHTML += `
+                                    </tbody>
+                                    <tfoot>
+                                        <tr style="background: var(--dorado-suave); font-weight: bold;">
+                                            <td colspan="4" style="padding: 0.75rem; border: 1px solid #ddd; text-align: right;">TOTAL ${title}:</td>
+                                            <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(totalValor)}</td>
+                                            <td colspan="2" style="padding: 0.75rem; border: 1px solid #ddd;"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                    
+                    resumenData.push({
+                        categoria: title,
+                        elementos: consolidated.length,
+                        valor_total: totalValor
+                    });
+                }
+            });
+            
+            // Agregar resumen al final
+            if (resumenData.length > 0) {
+                const totalGeneral = resumenData.reduce((sum, item) => sum + item.valor_total, 0);
+                
+                previewHTML += `
+                    <div class="modal-section" style="margin-top: 2rem; background: var(--light-green); padding: 1.5rem; border-radius: 12px;">
+                        <div class="section-title" style="margin-bottom: 1rem;">RESUMEN GENERAL</div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                `;
+                
+                resumenData.forEach(item => {
+                    const porcentaje = totalGeneral > 0 ? (item.valor_total / totalGeneral * 100).toFixed(1) : 0;
+                    previewHTML += `
+                        <div style="background: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-weight: bold; color: var(--verde-oscuro);">${item.categoria}</div>
+                            <div style="font-size: 0.9rem; margin: 0.5rem 0;">${item.elementos} elementos</div>
+                            <div style="font-size: 1.1rem; font-weight: bold; color: var(--verde-claro);">$${formatNumber(item.valor_total)}</div>
+                            <div style="font-size: 0.8rem; color: var(--gris-medio);">${porcentaje}%</div>
+                        </div>
+                    `;
+                });
+                
+                previewHTML += `
+                            <div style="background: var(--verde-claro); color: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-weight: bold;">TOTAL GENERAL</div>
+                                <div style="font-size: 1.3rem; font-weight: bold; margin-top: 0.5rem;">$${formatNumber(totalGeneral)}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            consolidatedPreviewContent.innerHTML = previewHTML;
+            consolidatedModalOverlay.classList.add('active');
+        }
+
+
+
+
+        // Función para exportar listas consolidadas
+        function exportConsolidatedLists() {
+            if (selectedAPUs.size === 0) return;
+            
+            const selectedData = Array.from(selectedAPUs).map(id => {
+                const apu = allAPUs.find(a => a.id === id);
+                return apu ? { codigo: apu.item, data: apu.rawData } : null;
+            }).filter(Boolean);
+            
+            // Función para consolidar elementos
+            function consolidateElements(category) {
+                const consolidated = {};
+                
+                selectedData.forEach(({ codigo, data }) => {
+                    const elements = data[category] || [];
+                    elements.forEach(item => {
+                        if (!item.descripcion || item.descripcion === 'ITEM') return;
+                        
+                        const key = `${item.descripcion}_${item.unidad}_${item.precio_tarifa}`;
+                        
+                        if (!consolidated[key]) {
+                            consolidated[key] = {
+                                descripcion: item.descripcion,
+                                unidad: item.unidad || 'N/A',
+                                cantidad: 0,
+                                precio_tarifa: item.precio_tarifa || 0,
+                                valor_total: 0,
+                                apus: new Set(),
+                                precio_unitario_promedio: item.precio_tarifa || 0
+                            };
+                        }
+                        
+                        consolidated[key].cantidad += (item.cantidad || 0);
+                        consolidated[key].valor_total += (item.valor_unitario || 0);
+                        consolidated[key].apus.add(codigo);
+                    });
+                });
+                
+                // Convertir a array y calcular valores
+                return Object.values(consolidated).map(item => ({
+                    ...item,
+                    apus: Array.from(item.apus).sort().join(', '),
+                    frecuencia: item.apus.size
+                })).sort((a, b) => a.descripcion.localeCompare(b.descripcion));
+            }
+            
+            // Crear workbook
+            const wb = XLSX.utils.book_new();
+            
+            // Categorías a procesar
+            const categories = [
+                { name: 'materiales', title: 'MATERIALES' },
+                { name: 'equipos', title: 'EQUIPOS' },
+                { name: 'mano_obra', title: 'MANO DE OBRA' },
+                { name: 'transporte', title: 'TRANSPORTES' },
+                { name: 'matrices', title: 'MATRICES' },
+                { name: 'trabajos', title: 'TRABAJOS' }
+            ];
+            
+            let resumenData = [];
+            
+            categories.forEach(({ name, title }) => {
+                const consolidated = consolidateElements(name);
+                
+                if (consolidated.length > 0) {
+                    // Crear hoja para esta categoría
+                    const sheetData = [];
+                    
+                    // Header
+                    sheetData.push([title, '', '', '', '', '', '']);
+                    sheetData.push(['', '', '', '', '', '', '']);
+                    sheetData.push(['Descripción', 'Unidad', 'Cantidad Total', 'Precio Unit.', 'Valor Total', 'APUs que lo usan', 'Frecuencia']);
+                    
+                    let totalValor = 0;
+                    consolidated.forEach(item => {
+                        totalValor += item.valor_total;
+                        sheetData.push([
+                            item.descripcion,
+                            item.unidad,
+                            formatNumber(item.cantidad),
+                            `$${formatNumber(item.precio_unitario_promedio)}`,
+                            `$${formatNumber(item.valor_total)}`,
+                            item.apus,
+                            item.frecuencia
+                        ]);
+                    });
+                    
+                    // Total
+                    sheetData.push(['', '', '', 'TOTAL:', `$${formatNumber(totalValor)}`, '', '']);
+                    
+                    // Crear worksheet
+                    const ws = XLSX.utils.aoa_to_sheet(sheetData);
+                    
+                    // Desactivar líneas de cuadrícula
+                    if (!ws['!views']) ws['!views'] = [{}];
+                    ws['!views'][0] = { showGridLines: false };
+                    
+                    // Aplicar estilos
+                    const headerStyle = {
+                        font: { bold: true, sz: 12 },
+                        fill: { fgColor: { rgb: "D9D9D9" } },
+                        alignment: { horizontal: "center", vertical: "center" }
+                    };
+                    
+                    const titleStyle = {
+                        font: { bold: true, sz: 14 },
+                        fill: { fgColor: { rgb: "4F81BD" } },
+                        alignment: { horizontal: "center", vertical: "center" }
+                    };
+                    
+                    // Aplicar estilos a header principal
+                    ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1'].forEach(cell => {
+                        if (!ws[cell]) ws[cell] = { v: "" };
+                        ws[cell].s = titleStyle;
+                    });
+                    
+                    // Aplicar estilos a header de tabla
+                    ['A3', 'B3', 'C3', 'D3', 'E3', 'F3', 'G3'].forEach(cell => {
+                        if (!ws[cell]) ws[cell] = { v: "" };
+                        ws[cell].s = headerStyle;
+                    });
+                    
+                    // Combinar título
+                    ws['!merges'] = [
+                        { s: { r: 0, c: 0 }, e: { r: 0, c: 6 } }
+                    ];
+                    
+                    // Configurar anchos
+                    ws['!cols'] = [
+                        {wch: 45}, {wch: 12}, {wch: 15}, {wch: 15}, 
+                        {wch: 15}, {wch: 25}, {wch: 12}
+                    ];
+                    
+                    XLSX.utils.book_append_sheet(wb, ws, title);
+                    
+                    // Agregar al resumen
+                    resumenData.push({
+                        categoria: title,
+                        elementos: consolidated.length,
+                        valor_total: totalValor
+                    });
+                }
+            });
+            
+            // Crear hoja de resumen
+            if (resumenData.length > 0) {
+                const resumenSheet = [];
+                resumenSheet.push(['RESUMEN CONSOLIDADO', '', '', '']);
+                resumenSheet.push(['', '', '', '']);
+                resumenSheet.push(['Categoría', 'Elementos', 'Valor Total', 'Porcentaje']);
+                
+                const totalGeneral = resumenData.reduce((sum, item) => sum + item.valor_total, 0);
+                
+                resumenData.forEach(item => {
+                    const porcentaje = totalGeneral > 0 ? (item.valor_total / totalGeneral * 100).toFixed(2) : 0;
+                    resumenSheet.push([
+                        item.categoria,
+                        item.elementos,
+                        `$${formatNumber(item.valor_total)}`,
+                        `${porcentaje}%`
+                    ]);
+                });
+                
+                resumenSheet.push(['TOTAL GENERAL', '', `$${formatNumber(totalGeneral)}`, '100%']);
+                
+                const wsResumen = XLSX.utils.aoa_to_sheet(resumenSheet);
+                
+                // Estilos para resumen
+                if (!wsResumen['!views']) wsResumen['!views'] = [{}];
+                wsResumen['!views'][0] = { showGridLines: false };
+                
+                wsResumen['!merges'] = [
+                    { s: { r: 0, c: 0 }, e: { r: 0, c: 3 } }
+                ];
+                
+                wsResumen['!cols'] = [{wch: 20}, {wch: 15}, {wch: 20}, {wch: 15}];
+                
+                XLSX.utils.book_append_sheet(wb, wsResumen, 'RESUMEN');
+            }
+            
+            // Descargar
+            XLSX.writeFile(wb, `Listas_Consolidadas_${new Date().toISOString().split('T')[0]}.xlsx`);
+        }
+
+        // ===== INITIALIZE ON LOAD =====
+        document.addEventListener('DOMContentLoaded', loadJSONData);
+    </script>
+</body>
+</html>
