@@ -36,13 +36,14 @@
             height: 100%;
             overflow: hidden;
         }
-
+        
         body {
             font-family: 'DM Sans', sans-serif;
             background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e9 100%);
             color: var(--negro);
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
         }
 
         /* Header */
@@ -96,6 +97,11 @@
             letter-spacing: 1px;
         }
 
+        .logo{
+
+            width: 120px;
+        }
+
         .header-stats {
             display: flex;
             gap: 1rem;
@@ -134,6 +140,11 @@
             padding: 1rem;
             overflow: hidden;
         }
+
+        footer {
+            margin-top: auto;
+        }
+
 
         /* Controls Panel */
         .controls-panel {
@@ -212,6 +223,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            min-height: 0;
         }
 
         .table-header {
@@ -235,6 +247,15 @@
             opacity: 0.9;
         }
 
+        #apus-section {
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        
         .table-wrapper {
             flex: 1;
             overflow: auto;
@@ -336,15 +357,18 @@
         }
 
         .modal {
-            background: var(--blanco);
-            border-radius: var(--radio);
-            max-width: 90vw;
-            max-height: 90vh;
-            width: 900px;
-            overflow: hidden;
+            background: white;
+            border-radius: 16px;
             box-shadow: var(--sombra-elevada);
-            transform: scale(0.9) translateY(-50px);
-            transition: var(--transicion);
+            max-width: 95vw;
+            width: 1200px;
+            height: 85vh; /* ALTURA FIJA */
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* IMPORTANTE */
+            margin: auto;
+            position: relative;
         }
 
         .modal-overlay.active .modal {
@@ -358,6 +382,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
+            flex-shrink: 0;
         }
 
         .modal-title {
@@ -607,6 +632,469 @@
 
 
 
+
+/* ===============================
+   CONTENEDOR GENERAL CENTRADO
+================================ */
+.presentacion-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+/* ===============================
+   TARJETA / CARD
+================================ */
+.presentacion-card {
+    width: 80%;
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    border: 1px solid #e5e5e5;
+}
+
+/* ===============================
+   CONTENIDO SCROLL
+================================ */
+.presentacion-content {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 12px;
+    text-align: justify;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Scroll personalizado */
+.presentacion-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.presentacion-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 8px;
+}
+
+.presentacion-content::-webkit-scrollbar-thumb {
+    background: #8d8d8d;
+    border-radius: 8px;
+}
+
+.presentacion-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* ===============================
+   TITULOS
+================================ */
+.presentacion-title {
+    font-size: 18px;
+
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #1e3d1e; /* Verde suave institucional */
+}
+
+.presentacion-subtitle {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #1e3d1e;
+}
+
+/* ===============================
+   PARRAFOS
+================================ */
+.presentacion-parrafo {
+    font-size: 18px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+/* ===============================
+   LISTAS
+================================ */
+.presentacion-lista {
+    margin-left: 25px;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.presentacion-lista li {
+    margin-bottom: 10px;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media screen and (max-width: 1100px) {
+    .presentacion-card {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .presentacion-card {
+        width: 92%;
+        padding: 20px;
+    }
+}
+
+.logo-press {
+    width: 250px;
+}
+.presentacion-header{
+    display: block;
+    justify-content: center;
+    align-items: center;
+   text-align: center; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Navigation Styles */
+        .header-nav {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            border-radius: var(--radio);
+            transition: var(--transicion);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: 1px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--dorado-claro);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-link.active {
+            background: var(--dorado);
+            color: var(--verde-oscuro);
+            font-weight: 600;
+            border-color: var(--dorado);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .presentacion-content, .marco-metodologico-content {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            box-shadow: var(--sombra);
+            padding: 2rem;
+            margin: 1rem 0;
+            line-height: 1.6;
+        }
+
+        .presentacion-content h2, .marco-metodologico-content h2 {
+            color: var(--verde-oscuro);
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .presentacion-content h3, .marco-metodologico-content h3 {
+            color: var(--verde-claro);
+            margin: 1.5rem 0 0.8rem 0;
+            font-size: 1.3rem;
+        }
+
+
+
+    /* Estilos para pestañas del modal consolidado */
+    .consolidatedTab {
+        color: var(--gris-medio) !important;
+        border: none !important;
+        border-bottom: 3px solid transparent !important;
+        background: none !important;
+        font-weight: 500;
+        font-size: 0.9rem;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .consolidatedTab:hover {
+        border-bottom-color: var(--dorado) !important;
+        color: var(--verde-antioquia) !important;
+        background: var(--dorado-suave) !important;
+    }
+
+    .consolidatedTab.active {
+        color: var(--verde-antioquia) !important;
+        border-bottom-color: var(--verde-antioquia) !important;
+        background: var(--dorado-suave) !important;
+        font-weight: 600;
+    }
+
+    .tab-pane {
+        display: none;
+    }
+
+    .tab-pane.show {
+        display: block;
+    }
+
+    .tab-badge {
+        background: var(--verde-antioquia);
+        color: white;
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 50px;
+        margin-left: 0.5rem;
+        font-weight: bold;
+    }
+
+    .section-title-tab {
+        color: var(--verde-antioquia);
+        font-weight: 600;
+        font-size: 1.1rem;
+        border-bottom: 2px solid var(--dorado);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+
+
+
+/* Estilos mejorados para pestañas horizontales del modal consolidado */
+#consolidatedTabs {
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(135deg, var(--verde-oscuro) 0%, var(--verde-antioquia) 100%);
+    border-radius: 12px 12px 0 0;
+    padding: 0.5rem;
+    margin: 0;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#consolidatedTabs .nav-item {
+    flex: 1;
+    margin: 0 0.25rem;
+}
+
+.consolidatedTab {
+    width: 100% !important;
+    color: rgba(255,255,255,0.8) !important;
+    border: none !important;
+    background: rgba(255,255,255,0.1) !important;
+    font-weight: 500;
+    font-size: 0.85rem;
+    padding: 0.75rem 0.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.consolidatedTab::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.consolidatedTab:hover::before {
+    opacity: 1;
+}
+
+.consolidatedTab:hover {
+    color: white !important;
+    background: rgba(255,255,255,0.2) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.consolidatedTab.active {
+    color: var(--verde-oscuro) !important;
+    background: var(--dorado) !important;
+    font-weight: 600;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4);
+}
+
+.consolidatedTab.active::before {
+    opacity: 0;
+}
+
+.tab-content {
+    flex: 1; /* OCUPA TODO EL ESPACIO RESTANTE */
+    margin: 0 1rem 1rem 1rem;
+    border: 2px solid var(--verde-antioquia);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    background: white;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    overflow: hidden; /* IMPORTANTE */
+}
+
+.tab-pane {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.tab-pane.show {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tab-badge {
+    background: var(--verde-oscuro);
+    color: var(--dorado);
+    font-size: 0.65rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 50px;
+    margin-top: 0.25rem;
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+    border: 1px solid var(--dorado);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.consolidatedTab.active .tab-badge {
+    background: var(--verde-oscuro);
+    color: var(--dorado);
+    border-color: var(--verde-oscuro);
+}
+
+.section-title-tab {
+    color: var(--verde-antioquia);
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-bottom: 3px solid var(--dorado);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Iconos de pestañas más grandes */
+.consolidatedTab .tab-icon {
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.consolidatedTab .tab-text {
+    font-size: 0.75rem;
+    line-height: 1.2;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+    #consolidatedTabs {
+        flex-wrap: wrap;
+    }
+    
+    #consolidatedTabs .nav-item {
+        flex: 0 0 48%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .consolidatedTab {
+        min-height: 50px;
+        font-size: 0.75rem;
+        padding: 0.5rem 0.25rem;
+    }
+    
+    .consolidatedTab .tab-icon {
+        font-size: 1rem;
+    }
+    
+    .consolidatedTab .tab-text {
+        font-size: 0.65rem;
+    }
+}
+
+/* Efectos adicionales para mejorar la experiencia */
+.modal-overlay.active {
+    backdrop-filter: blur(5px);
+}
+
+.modal-overlay.active .modal {
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+
+
+
     </style>
 </head>
 <body>
@@ -614,13 +1102,18 @@
     <header>
         <div class="header-content">
             <div class="logo-section">
-                <div class="logo-icon">PS</div>
+                <img class="logo" src="LogoGA.png" alt="">
                 <div class="logo-text">
-                    <h1>ProyectoSaris</h1>
-                    <span>Gobernación de Antioquia</span>
+                    <h1>VIPRA</h1>
+                    <span>Departamento de Antioquia</span>
                 </div>
             </div>
             <div class="header-stats">
+                <nav class="header-nav">
+                    <a href="#presentacion" class="nav-link active" onclick="showPresentacion()">Presentación</a>
+                    <a href="#marco-metodologico" class="nav-link" onclick="showMarcoMetodologico()">Marco Metodológico</a>
+                    <a href="#apus" class="nav-link" onclick="showAPUs()">APUs</a>
+                </nav>
                 <div class="stat-item">
                     <div class="number" id="totalApus">0</div>
                     <div class="label">Total APUs</div>
@@ -637,8 +1130,270 @@
         </div>
     </header>
 
+
     <!-- Main Content -->
     <div class="main-container">
+        <!-- SECCIÓN PRESENTACIÓN -->
+        <div id="presentacion-section" class="content-section active">
+            <div class="presentacion-container">
+                <div class="presentacion-card">
+                    <div class="presentacion-header">
+                        <img src="LogoGGA.png" alt="Logo" class="logo-press">
+                        <h2>Presentación</h2>
+                    </div>
+                    <div class="presentacion-content">
+                        <br>
+                        <h4 class="presentacion-title">
+                            1. Visor Interactivo de APUS para la Secretaría de Infraestructura Física del Departamento de Antioquia
+                        </h4>
+
+                        <p class="presentacion-parrafo">
+                            La Dirección de Estructuración de Proyectos, en cumplimiento de las funciones asignadas por la Secretaría de Infraestructura Física del Departamento de Antioquia, tiene entre sus responsabilidades la administración, actualización y mantenimiento de los sistemas de información que apoyan la planeación, estructuración y ejecución de proyectos de infraestructura en el departamento, abarcando el sistema de infraestructura vial.
+                        </p>
+
+                        <p class="presentacion-parrafo">
+                            En este marco, la publicación del presente Visor de Precios Unitarios de Referencia tiene como finalidad socializar los resultados del proceso de actualización de la Base de Precios Unitarios de Referencia de la Secretaría de Infraestructura Física.
+                        </p>
+
+                        <p class="presentacion-parrafo">
+                            El objetivo de este visor es proporcionar a los usuarios internos y externos una herramienta técnica, confiable y actualizada, que sirva como referencia para la planeación, formulación y evaluación de los presupuestos de infraestructura ejecutados en el territorio antioqueño.
+                        </p>
+
+                        <h4 class="presentacion-title">2. Aclaraciones sobre el uso de la información</h4>
+
+                        <p class="presentacion-parrafo">
+                            Por último, se resalta que esta publicación constituye una herramienta de consulta y referencia que puede ser empleada para la planeación y elaboración de presupuestos de obras de infraestructura en sus diferentes tipologías, de acuerdo con las necesidades y particularidades de cada proyecto.
+                        </p>
+
+                        <p class="presentacion-parrafo">
+                            Con el fin de dar alcance a la responsabilidad de la Entidad frente a la información que suministra al público en general, se aclara que esta no reemplaza el análisis técnico ni los soportes específicos requeridos en cada proceso, los cuales deberán adelantarse considerando las condiciones particulares de cada caso.
+                        </p>
+
+                        <p class="presentacion-parrafo">
+                            Por tanto, el uso de los datos publicados compromete únicamente la responsabilidad del interesado, quien debe verificar y/o actualizar la información conforme a sus necesidades.
+                        </p>
+
+                        <p class="presentacion-parrafo">
+                            A continuación, se presentan las principales precisiones:
+                        </p>
+
+                        <ol class="presentacion-lista">
+                            <li>La Secretaría de Infraestructura Física no garantiza que los precios publicados se ajusten a ninguna situación técnica o proyecto particular.</li>
+                            <li>El uso de los datos publicados es responsabilidad exclusiva del interesado, quien deberá verificar y/o actualizar la información según su aplicación específica.</li>
+                            <li>Los datos contenidos en la Base de Precios de Referencia no sustituyen la labor de los consultores internos o externos, quienes tienen la obligación contractual de analizar, evaluar y sustentar cada caso de manera individual.</li>
+                            <li>Los precios de referencia publicados no son indicativos de valores de contratación. Cada proceso licitatorio o contractual se adelanta de acuerdo con sus propias condiciones y estudios previos.</li>
+                            <li>El registro de marcas o productos comerciales no implica recomendación o preferencia alguna por parte de la Entidad. La responsabilidad de su selección recae exclusivamente sobre los consultores o responsables del proyecto con base en la especificación tecnica requerida.</li>
+                            <li>Los precios de insumos no contemplan descuentos por volumen de compra ni condiciones comerciales particulares. Como regla general, incluyen el valor del IVA; el interesado debe confirmar esta condición directamente con su proveedor.</li>
+                        </ol>
+
+                        <p class="presentacion-parrafo">
+                            Con esta herramienta, el Departamento de Antioquia, a través de la Secretaría de Infraestructura Física, reafirma su compromiso con la transparencia, la eficiencia y la modernización en la gestión pública, contribuyendo al fortalecimiento de los procesos de planeación y ejecución de la infraestructura del departamento.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN MARCO METODOLÓGICO -->
+        <div id="marco-metodologico-section" class="content-section">
+            <div class="presentacion-container">
+                <div class="presentacion-card">
+                    <div class="presentacion-header">
+                        <img src="LogoGGA.png" alt="Logo" class="logo-press">
+                        <h2>Marco metodológico</h2>
+                    </div>
+                    <div class="presentacion-content">
+                        <h4 class="presentacion-title">1. Proceso de Recolección, Análisis, Depuración y Publicación de Precios</h4>
+
+                        <p class="presentacion-parrafo">
+                            La metodología empleada por la Secretaría de Infraestructura Física del Departamento de Antioquia
+                            comprende el estudio del comportamiento de los precios de los insumos empleados en las diferentes
+                            obras de infraestructura departamental.
+                        </p>
+
+                        <p class="presentacion-parrafo">
+                            El objetivo principal es identificar precios de referencia confiables y actualizados que sirvan de apoyo
+                            en la planeación, formulación, ejecución y seguimiento de los proyectos de inversión que lidera o
+                            acompaña la Secretaría.
+                        </p>
+
+                        <p class="presentacion-parrafo">
+                            La información es recolectada por el equipo de Presupuestos de la Dirección de Estructuración de 
+                            Proyectos, mediante un trabajo directo que consiste en la captura de información a través de estudios 
+                            de mercado de una canasta representativa de insumos, previamente definida con base en los contratos y 
+                            proyectos más relevantes del Departamento.
+                        </p>
+
+                        <p class="presentacion-parrafo">
+                            Una vez culminado el proceso de validación y verificación, la información consolidada se pone a 
+                            disposición de los usuarios internos y externos a través del Visor de Precios Unitarios de Referencia, 
+                            garantizando el acceso a una base de datos confiable que apoya las labores de planeación, 
+                            estructuración, contratación y seguimiento de la infraestructura del Departamento de Antioquia.
+                        </p>
+
+                        <p class="presentacion-parrafo">
+                            El análisis de la información se realiza conforme a lineamientos metodológicos preestablecidos, que 
+                            incluyen la revisión de variables como registros históricos, precios, especificaciones técnicas, 
+                            cotizaciones, observaciones, controles de validación y proveedores.
+                        </p>
+
+                        <p class="presentacion-parrafo">
+                            Cada insumo es analizado individualmente para verificar los cambios en sus precios; posteriormente, se 
+                            realiza un análisis comparativo por proveedor con el fin de corroborar el cumplimiento de los criterios 
+                            definidos para el comportamiento de los insumos. Aquellos que presentan desviaciones significativas son 
+                            objeto de una verificación adicional antes de su validación y aprobación final.
+                        </p>
+
+                        <p class="presentacion-parrafo">
+                            Para efectos del procesamiento y cálculo, a cada insumo se le asigna un código único correspondiente al 
+                            sistema de codificación oficial de la Secretaría, asociado a su capítulo y análisis de costos unitarios, 
+                            garantizando uniformidad en el manejo de la información.
+                        </p>
+
+                        <h4 class="presentacion-title">2. Diseño Estadístico</h4>
+
+                        <h6 class="presentacion-subtitle">2.1 Población Objetivo</h6>
+                        <p class="presentacion-parrafo">
+                            Hace parte de la población objetivo toda persona interna o externa de la entidad dedicada a la consulta 
+                            de materiales, alquiler de maquinaria y suministro de mano de obra, que participe directa o 
+                            indirectamente en los proyectos de infraestructura desarrollados por el Departamento de Antioquia.
+                        </p>
+
+                        <h6 class="presentacion-subtitle">2.2 Marco Estadístico</h6>
+                        <p class="presentacion-parrafo">
+                            Los criterios de selección de las fuentes para la toma de precios se basan en los siguientes aspectos:
+                        </p>
+
+                        <ol class="presentacion-lista">
+                            <li>Que la fuente sea especializada en la producción o comercialización de materiales de construcción.</li>
+                            <li>Que los artículos informados tengan venta o producción continua y representativa.</li>
+                            <li>Que las fuentes de alquiler de maquinaria sean proveedores activos del sector constructor.</li>
+                            <li>Que los establecimientos seleccionados puedan ser productores, distribuidores mayoristas o minoristas.</li>
+                            <li>Que la información suministrada sea veraz, verificable y representativa del mercado.</li>
+                        </ol>
+
+                        <h6 class="presentacion-subtitle">2.3 Definición de Variables</h6>
+                        <p class="presentacion-parrafo">
+                            La variable fundamental para la base de precios es el precio de los insumos que conforman la canasta 
+                            de referencia, a los cuales se les realiza seguimiento de manera periódica y sistemática.
+                        </p>
+
+                        <h4 class="presentacion-title">3. Unidades Estadísticas</h4>
+                        <h6 class="presentacion-subtitle">3.1 Unidad de Observación</h6>
+                        <p class="presentacion-parrafo">Insumos y/o variedades de insumos incluidos en la canasta representativa de la infraestructura departamental.</p>
+                        <h6 class="presentacion-subtitle">3.2 Unidad de Análisis</h6>
+                        
+                        <p class="presentacion-parrafo">Precios de los insumos más relevantes empleados en las obras de infraestructura del departamento.</p>
+
+                        <h4 class="presentacion-title">4. Periodo de Referencia</h4>
+                        <p class="presentacion-parrafo">
+                            Corresponde al periodo en que se actualizan los precios de la canasta definida, los cuales se registran 
+                            a precios nominales del mes de recolección.
+                        </p>
+
+                        <h4 class="presentacion-title">5. Diseño de la Ejecución</h4>
+                        <p class="presentacion-parrafo">
+                            El proceso de recolección, procesamiento y validación comprende las fases de:
+                        </p>
+
+                        <ol class="presentacion-lista">
+                            <li>Definición de la canasta de insumos.</li>
+                            <li>Estudio de mercado.</li>
+                            <li>Depuración y verificación de la información.</li>
+                            <li>Análisis y validación de precios.</li>
+                            <li>Carga y publicación en el Visor de Precios Unitarios de Referencia.</li>
+                        </ol>
+
+                        <h4 class="presentacion-title">6. Diseño del Análisis de Resultados</h4>
+                        <h4 class="presentacion-subtitle">6.1 Análisis de Contexto e Impacto</h4>
+                        <p class="presentacion-parrafo">
+                            Se realizan ejercicios de seguimiento a las tendencias del mercado, comparaciones con otras fuentes 
+                            de información y validaciones de consistencia técnica para garantizar la comparabilidad de los datos.
+                        </p>
+
+                        <h4 class="presentacion-title">7. Diseño de la Difusión y Publicación</h4>
+
+                        <p class="presentacion-parrafo">Los productos generados incluyen:</p>
+
+                        <ul class="presentacion-lista">
+                            <li>Memoria técnica del proceso de recolección, depuración, análisis y divulgación.</li>
+                            <li>Base de datos actualizada, disponible en el repositorio oficial del área de Presupuestos.</li>
+                            <li>Documentación de análisis de información con simulaciones de variación de precios.</li>
+                            <li>Visor interactivo de consulta para usuarios internos y externos.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN APUs -->
+        <div id="apus-section" class="content-section">
+            <!-- Controls -->
+            <div class="controls-panel">
+                <div class="controls-row">
+                    <div class="search-container">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        </svg>
+                        <input type="text" class="search-input" id="searchInput" placeholder="Buscar por código o descripción...">
+                    </div>
+                    <div class="filter-container">
+                        <select id="subregionFilter" class="filter-select">
+                            <option value="">Todas las subregiones</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <div class="table-title">APUs Disponibles</div>
+
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div class="table-info">Total: <span id="tableCount">0</span> elementos</div>
+                        <button class="btn btn-primary" id="downloadBtn" disabled style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+                            Descargar Excel (<span id="selectedCount">0</span>)
+                        </button>
+                        <button class="btn btn-primary" id="consolidatedBtn" disabled style="padding: 0.5rem 1rem; font-size: 0.85rem; margin-left: 0.5rem;">
+                            Listas Consolidadas (<span id="selectedCountConsolidated">0</span>)
+                        </button>
+                    </div>
+
+                </div>
+                <div class="table-wrapper" id="tableWrapper">
+                    <!-- Loading indicator -->
+                    <div class="loading-indicator" id="loadingIndicator">
+                        <div class="loading-spinner"></div>
+                        <div style="font-size: 1.1rem; margin-bottom: 0.5rem;">Cargando APUs...</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">Por favor espera un momento</div>
+                    </div>
+                    
+                    <!-- Table -->
+                    <table id="apuTable" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;"><input type="checkbox" id="selectAll" style="accent-color: var(--dorado);"></th>
+                                <th style="width: 80px;">Ítem</th>
+                                <th>Descripción</th>
+                                <th style="width: 100px;">Unidad</th>
+                                <th style="width: 120px;">Subregión</th>
+                                <th style="width: 140px; text-align: right;">Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody id="apuTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    </div>
+    <!-- Main Content -->
+    <div class="main-container" style="display: none;">
         <!-- Controls -->
         <div class="controls-panel">
             <div class="controls-row">
@@ -727,10 +1482,85 @@
                 </div>
                 <button class="modal-close" id="consolidatedModalClose">&times;</button>
             </div>
-            <div class="modal-body" style="max-height: 70vh; overflow-y: auto; padding: 1rem;">
-                <div id="consolidatedPreviewContent">
-                    <!-- El contenido se generará dinámicamente -->
+        <div class="modal-body" style="padding: 1rem;">
+            <!-- Navegación por pestañas -->
+            <ul class="nav nav-tabs" id="consolidatedTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active consolidatedTab" id="materiales-tab" data-target="materiales-section" type="button">
+                        <span class="tab-icon">🧱</span>
+                        <span class="tab-text">Materiales</span>
+                        <span class="tab-badge" id="materiales-badge">0</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link consolidatedTab" id="equipos-tab" data-target="equipos-section" type="button">
+                        <span class="tab-icon">🔧</span>
+                        <span class="tab-text">Equipos</span>
+                        <span class="tab-badge" id="equipos-badge">0</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link consolidatedTab" id="transporte-tab" data-target="transporte-section" type="button">
+                        <span class="tab-icon">🚛</span>
+                        <span class="tab-text">Transportes</span>
+                        <span class="tab-badge" id="transporte-badge">0</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link consolidatedTab" id="manoobra-tab" data-target="manoobra-section" type="button">
+                        <span class="tab-icon">👷</span>
+                        <span class="tab-text">Mano de<br>Obra</span>
+                        <span class="tab-badge" id="manoobra-badge">0</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link consolidatedTab" id="otros-tab" data-target="otros-section" type="button">
+                        <span class="tab-icon">📦</span>
+                        <span class="tab-text">Otros</span>
+                        <span class="tab-badge" id="otros-badge">0</span>
+                    </button>
+                </li>
+            </ul>
+
+
+
+
+                <!-- Contenido de las pestañas -->
+                <div class="tab-content" style="border: 2px solid var(--verde-antioquia); border-top: none; border-radius: 0 0 12px 12px; background: white;">
+                    <div class="tab-pane show active" id="materiales-section" style="padding: 1rem; max-height: 60vh; overflow-y: auto;">
+                        <div id="materiales-content">
+                            <!-- Materiales consolidados -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane" id="equipos-section" style="padding: 1rem; max-height: 60vh; overflow-y: auto;">
+                        <div id="equipos-content">
+                            <!-- Equipos consolidados -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane" id="transporte-section" style="padding: 1rem; max-height: 60vh; overflow-y: auto;">
+                        <div id="transporte-content">
+                            <!-- Transportes consolidados -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane" id="manoobra-section" style="padding: 1rem; max-height: 60vh; overflow-y: auto;">
+                        <div id="manoobra-content">
+                            <!-- Mano de obra consolidada -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane" id="otros-section" style="padding: 1rem; max-height: 60vh; overflow-y: auto;">
+                        <div id="otros-content">
+                            <!-- Matrices y trabajos -->
+                        </div>
+                    </div>
                 </div>
+
+
+
+
                 <div style="text-align: center; margin-top: 2rem; padding: 1rem; border-top: 2px solid var(--gris-claro);">
                     <button class="btn btn-primary" id="downloadConsolidatedBtn" style="margin-right: 1rem;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -745,6 +1575,11 @@
     </div>
 
 
+    <footer style="background: var(--verde-oscuro); color: var(--blanco); text-align: center; padding: 0.75rem; font-size: 0.75rem; flex-shrink: 0; border-top: 2px solid var(--dorado);">
+        <div style="opacity: 0.8;">
+            © 2025 Todos los derechos reservados | Elaborado por Sara Michelle Molina Thomas | Secretaría de Infraestructura Física - Departamento de Antioquia
+        </div>
+    </footer>
 
 
 
@@ -1336,6 +2171,26 @@
             consolidatedBtn.disabled = count === 0;
         }
 
+
+        // Funcionalidad para pestañas del modal consolidado
+        document.querySelectorAll('.consolidatedTab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remover active de todas las pestañas
+                document.querySelectorAll('.consolidatedTab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('show', 'active'));
+                
+                // Activar pestaña clickeada
+                this.classList.add('active');
+                const targetId = this.getAttribute('data-target');
+                const targetPane = document.getElementById(targetId);
+                if (targetPane) {
+                    targetPane.classList.add('show', 'active');
+                }
+            });
+        });
+
+
+
         // Función de descarga Excel
         function downloadExcel() {
             if (selectedAPUs.size === 0) return;
@@ -1350,8 +2205,18 @@
             selectedData.forEach((data, index) => {
                 const apu = allAPUs.find(a => a.rawData === data);
                 const sheetData = [];
-                
+
                 // Header principal - ÍTEM, DESCRIPCIÓN, UNIDAD
+                sheetData.push(['', 'ANÁLISIS DE PRECIOS UNITARIOS', '', '', '', '', 'Proceso:', 'LIC - CCCCC', '']);
+                sheetData.push(['', '', '', '', '', '', 'Fecha Lic:', '20/03/2025', '']);
+                sheetData.push(['', '', '', '', '', '', 'Versión:', '', '']);
+                sheetData.push(['', '', '', '', '', '', 'Página:', '1 de 1', '']);
+                sheetData.push(['', '', '', '', '', '', '', '', '']);
+
+                sheetData.push(['Análisis de Precios Unitarios para las Subregiones de Occidente, Bajo Cauca, Magdalena Medio, Norte, Nordeste y Urabá del Departamento de Antioquia', '', '', '', '', '', '', '', '']);
+
+                sheetData.push(['', '', '', '', '', '', '', '', '']);
+
                 sheetData.push(['ÍTEM', 'DESCRIPCIÓN', '', '', '', '', '', '', 'UNIDAD']);
                 sheetData.push([apu.item, data.descripcion || '', '', '', '', '', '', '', data.unidad || '']);
                 sheetData.push(['', '', '', '', '', '', '', '', '']); // Línea vacía
@@ -1387,7 +2252,7 @@
                     const validMateriales = data.materiales.filter(item => item.descripcion && item.descripcion !== 'ITEM');
                     if (validMateriales.length > 0) {
                         sheetData.push(['II. MATERIALES', '', '', '', '', '', '', '', '']);
-                        sheetData.push(['Descripción', '', '', '', '', 'Unidad', 'Cantidad', 'Precio-Unit', 'Valor-Unit', '']);
+                        sheetData.push(['Descripción', '', '', '', '', 'Unidad', 'Cantidad', 'Precio-Unit', 'Valor-Unit']);
                         
                         let subtotalMateriales = 0;
                         validMateriales.forEach(item => {
@@ -1402,7 +2267,7 @@
                                 `$${formatNumber(valorUnit)}`
                             ]);
                         });
-                        sheetData.push(['', '', '', '', '', '',  '', 'Sub-Total', `$${formatNumber(subtotalMateriales)}`, '']);
+                        sheetData.push(['', '', '', '', '', '',  '', 'Sub-Total', `$${formatNumber(subtotalMateriales)}`]);
                         sheetData.push(['', '', '', '', '', '', '', '', '']); // Línea vacía
                     }
                 }
@@ -1451,8 +2316,7 @@
                                 `$${formatNumber(item.unidad)}`,
                                 `$${formatNumber(item.cantidad)}`,
                                 formatNumber(item.precio_tarifa),
-                                `$${formatNumber(valorUnit)}`,
-                                '', ''
+                                `$${formatNumber(valorUnit)}`
                             ]);
                         });
                         sheetData.push(['', '', '', '', '', '', '', 'Sub-Total', `$${formatNumber(subtotalManoObra)}`]);
@@ -1464,22 +2328,40 @@
                 sheetData.push(['', '', '', '', '', '', '', 'Total Costo Directo', `$${formatNumber(data.precio_unitario_total)}`]);
                 sheetData.push(['', '', '', '', '', '', '', '', '']); // Línea vacía
                 
-                // IV. COSTOS INDIRECTOS
-                sheetData.push(['IV. COSTOS INDIRECTOS', '', '', '', '', '', '', '', '']);
-                sheetData.push(['Descripción', '', '', '', '', '', '', 'Porcentaje', 'Valor Total', '']);
-                sheetData.push(['ADMINISTRACION', '', '', '', '', '', '', '0,00%', '$0', '']);
-                sheetData.push(['UTILIDAD', '', '', '', '', '', '', '0,00%', '$0', '']);
-                sheetData.push(['IMPREVISTOS', '', '', '', '', '', '', '0,00%', '$0', '']);
+                // V. COSTOS INDIRECTOS
+                sheetData.push(['V. COSTOS INDIRECTOS', '', '', '', '', '', '', '', '']);
+                sheetData.push(['Descripción', '', '', '', '', '', '', 'Porcentaje', 'Valor Total']);
+                sheetData.push(['ADMINISTRACION', '', '', '', '', '', '', '0,00%', '$0']);
+                sheetData.push(['UTILIDAD', '', '', '', '', '', '', '0,00%', '$0']);
+                sheetData.push(['IMPREVISTOS', '', '', '', '', '', '', '0,00%', '$0']);
                 sheetData.push(['Total sobrecostos', '', '', '', '', '', '', '', '$0']);
                 sheetData.push(['', '', '', '', '', '', 'Sub-Total', '0,00%', '$0']);
                 sheetData.push(['', '', '', '', '', '', '', '', '']);
                 
                 // Precio unitario total aproximado al peso
-                sheetData.push(['', '', '', '', '','','', 'Precio unitario total aproximado al peso', `$${formatNumber(data.precio_unitario_total)}`, '']);
+                sheetData.push(['', '', '', '', '','','', 'Precio unitario total aproximado al peso', `$${formatNumber(data.precio_unitario_total)}`]);
                 
                 // Crear hoja
                 const ws = XLSX.utils.aoa_to_sheet(sheetData);
-                
+
+                // Función para aplicar estilo con bordes
+                const applyStyleToCell = (cellRef, font = {}, fill = null, alignment = {}) => {
+                    if (!ws[cellRef]) {
+                        ws[cellRef] = { v: "" }; // Crear celda si no existe
+                    }
+                    ws[cellRef].s = {
+                        font: { name: "Arial", sz: 10, ...font },
+                        fill: fill ? { fgColor: { rgb: fill } } : undefined,
+                        alignment: { horizontal: "center", vertical: "center", ...alignment },
+                        border: {
+                            top: { style: "thin", color: { rgb: "000000" } },
+                            bottom: { style: "thin", color: { rgb: "000000" } },
+                            left: { style: "thin", color: { rgb: "000000" } },
+                            right: { style: "thin", color: { rgb: "000000" } }
+                        }
+                    };
+                };
+
                 // Desactivar líneas de cuadrícula
                 if (!ws['!views']) ws['!views'] = [{}];
                 ws['!views'][0] = { showGridLines: false };
@@ -1487,8 +2369,15 @@
                 // Aplicar combinaciones de celdas
                 ws['!merges'] = [
                     // Header principal
-                    { s: { r: 0, c: 1 }, e: { r: 0, c: 7 } }, // DESCRIPCIÓN
-                    { s: { r: 1, c: 1 }, e: { r: 1, c: 7 } }, // Descripción del APU (B a H)
+                    { s: { r: 0, c: 1 }, e: { r: 3, c: 5 } },
+                    { s: { r: 0, c: 7 }, e: { r: 0, c: 8 } },
+                    { s: { r: 1, c: 7 }, e: { r: 1, c: 8 } }, 
+                    { s: { r: 2, c: 7 }, e: { r: 2, c: 8 } }, 
+                    { s: { r: 3, c: 7 }, e: { r: 3, c: 8 } }, 
+                    { s: { r: 0, c: 0 }, e: { r: 3, c: 0 } }, 
+                    { s: { r: 5, c: 0 }, e: { r: 5, c: 8 } }, 
+                    { s: { r: 7, c: 1 }, e: { r: 7, c: 7 } }, 
+                    { s: { r: 8, c: 1 }, e: { r: 8, c: 7 } }, 
                     
                     // Títulos de secciones y descripciones de equipos
                     ...sheetData.map((row, idx) => {
@@ -1497,25 +2386,25 @@
                         }
                         if (row[0] && (row[0].includes('II. MATERIALES') || 
                             row[0].includes('III. TRANSPORTES') || row[0].includes('IV. MANO DE OBRA') || 
-                            row[0].includes('IV. COSTOS INDIRECTOS'))) {
+                            row[0].includes('V. COSTOS INDIRECTOS'))) {
                             return { s: { r: idx, c: 0 }, e: { r: idx, c: 8 } }; // Toda la fila
                         }
                         
-                        // Combinar descripciones de equipos (A a C)
+                        // Combinar descripciones de equipos (A a D)
                         if (row[0] && row[0] !== 'Descripción' && row[0] !== '' && idx > 0) {
                             const equipoSectionStart = sheetData.findIndex(r => r[0] && r[0].includes('I. EQUIPO'));
                             const materialesSectionStart = sheetData.findIndex(r => r[0] && r[0].includes('II. MATERIALES'));
                             
                             if (equipoSectionStart !== -1 && idx > equipoSectionStart && 
                                 (materialesSectionStart === -1 || idx < materialesSectionStart)) {
-                                return { s: { r: idx, c: 0 }, e: { r: idx, c: 2 } };
+                                return { s: { r: idx, c: 0 }, e: { r: idx, c: 3 } };
                             }
                             
-                            // Combinar descripciones de materiales (A a D)
+                            // Combinar descripciones de materiales (A a E)
                             const transportesSectionStart = sheetData.findIndex(r => r[0] && r[0].includes('III. TRANSPORTES'));
                             if (materialesSectionStart !== -1 && idx > materialesSectionStart && 
                                 (transportesSectionStart === -1 || idx < transportesSectionStart)) {
-                                return { s: { r: idx, c: 0 }, e: { r: idx, c: 3 } };
+                                return { s: { r: idx, c: 0 }, e: { r: idx, c: 4 } };
                             }
                             
                             // Combinar descripciones de transportes (A a B)
@@ -1525,11 +2414,11 @@
                                 return { s: { r: idx, c: 0 }, e: { r: idx, c: 1 } };
                             }
                             
-                            // Combinar descripciones de mano de obra (A a C)
-                            const costosIndirectosStart = sheetData.findIndex(r => r[0] && r[0].includes('IV. COSTOS INDIRECTOS'));
+                            // Combinar descripciones de mano de obra (A a E)
+                            const costosIndirectosStart = sheetData.findIndex(r => r[0] && r[0].includes('V. COSTOS INDIRECTOS'));
                             if (manoObraSectionStart !== -1 && idx > manoObraSectionStart && 
                                 (costosIndirectosStart === -1 || idx < costosIndirectosStart)) {
-                                return { s: { r: idx, c: 0 }, e: { r: idx, c: 2 } };
+                                return { s: { r: idx, c: 0 }, e: { r: idx, c: 4 } };
                             }
                         }
                         
@@ -1537,80 +2426,67 @@
                     }).filter(Boolean)
                 ];
                 
-                // Aplicar estilos
-                const cellStyle = (font = {}, fill = null, alignment = {}, border = null) => ({
-                    font: { name: "Arial", sz: 10, ...font },
-                    fill: fill ? { fgColor: { rgb: fill } } : undefined,
-                    alignment: { horizontal: "center", vertical: "center", ...alignment },
-                    border: border || {
-                        top: { style: "thin", color: { rgb: "000000" } },
-                        bottom: { style: "thin", color: { rgb: "000000" } },
-                        left: { style: "thin", color: { rgb: "000000" } },
-                        right: { style: "thin", color: { rgb: "000000" } }
-                    }
-                });
-                
-                // Aplicar estilos a celdas específicas
+                // Aplicar bordes a TODAS las celdas con datos
                 sheetData.forEach((row, rowIdx) => {
                     row.forEach((cell, colIdx) => {
-                        const cellRef = XLSX.utils.encode_cell({ r: rowIdx, c: colIdx });
-                        
-                        // Header principal
-                        if (rowIdx === 0 || rowIdx === 1) {
-                            ws[cellRef] = { 
-                                ...ws[cellRef], 
-                                s: cellStyle({ bold: true }, "D9D9D9", { horizontal: "center" })
-                            };
-                        }
-                        
-                        // Títulos de secciones
-                        if (cell && (cell.includes('I. ') || cell.includes('II. ') || 
-                            cell.includes('III. ') || cell.includes('IV. '))) {
-                            ws[cellRef] = { 
-                                ...ws[cellRef], 
-                                s: cellStyle({ bold: true }, "F2F2F2", { horizontal: "left" })
-                            };
-                        }
-                        
-                        // Headers de tablas
-                        if (cell === 'Descripción' || cell === 'Marca' || cell === 'Tipo' || 
-                            cell === 'Unidad' || cell === 'Cantidad' || cell === 'Precio-Unit' || 
-                            cell === 'Valor-Unit' || cell === 'Tarifa/Hora-Día' || cell === 'Rendimiento' ||
-                            cell === 'Jornal' || cell === 'Porcentaje' || cell === 'Valor Total') {
-                            ws[cellRef] = { 
-                                ...ws[cellRef], 
-                                s: cellStyle({ bold: true }, "D9D9D9", { horizontal: "center" })
-                            };
-                        }
-                        
-                        // Subtotales
-                        if (cell && (cell.includes('Sub-Total') || cell.includes('Total Costo Directo'))) {
-                            ws[cellRef] = { 
-                                ...ws[cellRef], 
-                                s: cellStyle({ bold: true }, null, { horizontal: "right" })
-                            };
-                        }
-                        
-                        // Precio final
-                        if (cell && cell.includes('Precio unitario total aproximado al peso')) {
-                            ws[cellRef] = { 
-                                ...ws[cellRef], 
-                                s: cellStyle({ bold: true }, "FFFF99", { horizontal: "right" })
-                            };
+                        if (cell && cell !== '') { // Solo si la celda tiene contenido
+                            const cellRef = XLSX.utils.encode_cell({ r: rowIdx, c: colIdx });
+                            
+                            // Aplicar estilo básico con bordes
+                            applyStyleToCell(cellRef);
+                            
+                            // Aplicar estilos específicos según el contenido
+                            
+                            // Header principal (filas 0-3)
+                            if (rowIdx >= 0 && rowIdx <= 3) {
+                                applyStyleToCell(cellRef, { bold: true }, "D9D9D9", { horizontal: "center" });
+                            }
+                            
+                            // Título descriptivo (fila 5)
+                            else if (rowIdx === 5) {
+                                applyStyleToCell(cellRef, { bold: true }, "E8F5E8", { horizontal: "center" });
+                            }
+                            
+                            // Headers ÍTEM/DESCRIPCIÓN/UNIDAD (fila 7)
+                            else if (rowIdx === 7) {
+                                applyStyleToCell(cellRef, { bold: true }, "D9D9D9", { horizontal: "center" });
+                            }
+                            
+                            // Contenido ÍTEM/DESCRIPCIÓN/UNIDAD (fila 8)
+                            else if (rowIdx === 8) {
+                                applyStyleToCell(cellRef, { bold: true }, "F9F9F9", { horizontal: "center" });
+                            }
+                            
+                            // Títulos de secciones
+                            else if (cell.includes('I. ') || cell.includes('II. ') || 
+                                    cell.includes('III. ') || cell.includes('IV. ') || cell.includes('V. ')) {
+                                applyStyleToCell(cellRef, { bold: true }, "F2F2F2", { horizontal: "left" });
+                            }
+                            
+                            // Headers de tablas
+                            else if (['Descripción', 'Marca', 'Tipo', 'Unidad', 'Cantidad', 'Precio-Unit', 
+                                    'Valor-Unit', 'Tarifa/Hora-Día', 'Rendimiento', 'Jornal', 
+                                    'Porcentaje', 'Valor Total'].includes(cell)) {
+                                applyStyleToCell(cellRef, { bold: true }, "D9D9D9", { horizontal: "center" });
+                            }
+                            
+                            // Subtotales
+                            else if (cell.includes('Sub-Total') || cell.includes('Total Costo Directo')) {
+                                applyStyleToCell(cellRef, { bold: true }, null, { horizontal: "right" });
+                            }
+                            
+                            // Precio final
+                            else if (cell.includes('Precio unitario total aproximado al peso')) {
+                                applyStyleToCell(cellRef, { bold: true }, "FFFF99", { horizontal: "right" });
+                            }
                         }
                     });
                 });
                 
                 // Configurar anchos de columna
                 ws['!cols'] = [
-                    {wch: 12}, {wch: 12}, {wch: 12}, {wch: 12}, {wch: 12}, 
-                    {wch: 12}, {wch: 12}, {wch: 12}, {wch: 12}
-                ];
-                
-
-                ws['!rows'] = [
-                    { hpt: 60 }, // Fila 2 (ítem y descripción) - altura aumentada
-                    ...Array(sheetData.length - 3).fill({ hpt: 20 }) // Resto de filas altura normal
+                    {wch: 12}, {wch: 15}, {wch: 12}, {wch: 12}, {wch: 12}, 
+                    {wch: 12}, {wch: 15}, {wch: 18}, {wch: 15}
                 ];
 
                 // Nombre de la hoja
@@ -1714,13 +2590,25 @@
                     const headerStyle = {
                         font: { bold: true, sz: 12 },
                         fill: { fgColor: { rgb: "D9D9D9" } },
-                        alignment: { horizontal: "center", vertical: "center" }
+                        alignment: { horizontal: "center", vertical: "center" },
+                        border: {
+                            top: { style: "thin", color: { rgb: "000000" } },
+                            bottom: { style: "thin", color: { rgb: "000000" } },
+                            left: { style: "thin", color: { rgb: "000000" } },
+                            right: { style: "thin", color: { rgb: "000000" } }
+                        }
                     };
                     
                     const titleStyle = {
                         font: { bold: true, sz: 14 },
                         fill: { fgColor: { rgb: "4F81BD" } },
-                        alignment: { horizontal: "center", vertical: "center" }
+                        alignment: { horizontal: "center", vertical: "center" },
+                        border: {
+                            top: { style: "thin", color: { rgb: "000000" } },
+                            bottom: { style: "thin", color: { rgb: "000000" } },
+                            left: { style: "thin", color: { rgb: "000000" } },
+                            right: { style: "thin", color: { rgb: "000000" } }
+                        }
                     };
                     
                     // Aplicar estilos
@@ -1785,11 +2673,11 @@
                 XLSX.utils.book_append_sheet(wb, wsResumen, 'RESUMEN_CONSOLIDADO');
             }
             
-            // ========== FIN LISTAS CONSOLIDADAS ==========
-            
             // Descargar archivo
             XLSX.writeFile(wb, `APUs_Seleccionados_${new Date().toISOString().split('T')[0]}.xlsx`);
         }
+
+
 
 
 
@@ -1802,7 +2690,7 @@
                 return apu ? { codigo: apu.item, data: apu.rawData } : null;
             }).filter(Boolean);
             
-            // Función para consolidar elementos (misma que en exportConsolidatedLists)
+            // Función para consolidar elementos (simplificada)
             function consolidateElements(category) {
                 const consolidated = {};
                 
@@ -1811,22 +2699,22 @@
                     elements.forEach(item => {
                         if (!item.descripcion || item.descripcion === 'ITEM') return;
                         
-                        const key = `${item.descripcion}_${item.unidad}_${item.precio_tarifa}`;
+                        const key = item.descripcion;
                         
                         if (!consolidated[key]) {
                             consolidated[key] = {
                                 descripcion: item.descripcion,
                                 unidad: item.unidad || 'N/A',
-                                cantidad: 0,
                                 precio_tarifa: item.precio_tarifa || 0,
-                                valor_total: 0,
-                                apus: new Set(),
-                                precio_unitario_promedio: item.precio_tarifa || 0
+                                jornal: item.jornal || 0,
+                                jornal_total: item.jornal_total || 0,
+                                tarifa_hora_dia: item.tarifa_hora_dia || item.precio_tarifa || 0,
+                                cantidad: 0,
+                                apus: new Set()
                             };
                         }
                         
                         consolidated[key].cantidad += (item.cantidad || 0);
-                        consolidated[key].valor_total += (item.valor_unitario || 0);
                         consolidated[key].apus.add(codigo);
                     });
                 });
@@ -1838,120 +2726,192 @@
                 })).sort((a, b) => a.descripcion.localeCompare(b.descripcion));
             }
             
-            // Generar contenido HTML para vista previa
-            const categories = [
-                { name: 'materiales', title: 'MATERIALES' },
-                { name: 'equipos', title: 'EQUIPOS' },
-                { name: 'mano_obra', title: 'MANO DE OBRA' },
-                { name: 'transporte', title: 'TRANSPORTES' },
-                { name: 'matrices', title: 'MATRICES' },
-                { name: 'trabajos', title: 'TRABAJOS' }
-            ];
+            // Consolidar por categorías
+            const materialesConsolidados = consolidateElements('materiales');
+            const equiposConsolidados = consolidateElements('equipos');
+            const manoObraConsolidada = consolidateElements('mano_obra');
+            const transportesConsolidados = consolidateElements('transporte');
+            const matricesConsolidadas = consolidateElements('matrices');
+            const trabajosConsolidados = consolidateElements('trabajos');
             
-            let previewHTML = '';
-            let resumenData = [];
-            
-            categories.forEach(({ name, title }) => {
-                const consolidated = consolidateElements(name);
-                
-                if (consolidated.length > 0) {
-                    let totalValor = consolidated.reduce((sum, item) => sum + item.valor_total, 0);
-                    
-                    previewHTML += `
-                        <div class="modal-section" style="margin-bottom: 2rem;">
-                            <div class="section-title" style="background: var(--verde-claro); color: white; padding: 0.75rem; margin-bottom: 1rem; border-radius: 8px;">
-                                ${title} (${consolidated.length} elementos)
-                            </div>
-                            <div style="overflow-x: auto;">
-                                <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
-                                    <thead>
-                                        <tr style="background: var(--gris-claro);">
-                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: left; min-width: 200px;">Descripción</th>
-                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: center; width: 80px;">Unidad</th>
-                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 100px;">Cantidad</th>
-                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 110px;">Precio Unit.</th>
-                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; width: 120px;">Valor Total</th>
-                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: center; width: 80px;">Frecuencia</th>
-                                            <th style="padding: 0.5rem; border: 1px solid #ddd; text-align: left; min-width: 120px;">APUs</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                    `;
-                    
-                    consolidated.forEach(item => {
-                        previewHTML += `
-                            <tr style="border-bottom: 1px solid #eee;">
-                                <td style="padding: 0.5rem; border: 1px solid #ddd;">${item.descripcion}</td>
-                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: center;">${item.unidad}</td>
-                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">${formatNumber(item.cantidad)}</td>
-                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(item.precio_unitario_promedio)}</td>
-                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-family: monospace; font-weight: 600;">$${formatNumber(item.valor_total)}</td>
-                                <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: center;">${item.frecuencia}</td>
-                                <td style="padding: 0.5rem; border: 1px solid #ddd; font-size: 0.8rem;">${item.apus}</td>
-                            </tr>
-                        `;
-                    });
-                    
-                    previewHTML += `
-                                    </tbody>
-                                    <tfoot>
-                                        <tr style="background: var(--dorado-suave); font-weight: bold;">
-                                            <td colspan="4" style="padding: 0.75rem; border: 1px solid #ddd; text-align: right;">TOTAL ${title}:</td>
-                                            <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(totalValor)}</td>
-                                            <td colspan="2" style="padding: 0.75rem; border: 1px solid #ddd;"></td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    `;
-                    
-                    resumenData.push({
-                        categoria: title,
-                        elementos: consolidated.length,
-                        valor_total: totalValor
-                    });
+            // Función para crear tabla de MATERIALES
+            function createMaterialesTable(items) {
+                if (items.length === 0) {
+                    return '<div style="text-align: center; padding: 2rem; color: var(--gris-medio);">No hay materiales para mostrar.</div>';
                 }
-            });
-            
-            // Agregar resumen al final
-            if (resumenData.length > 0) {
-                const totalGeneral = resumenData.reduce((sum, item) => sum + item.valor_total, 0);
                 
-                previewHTML += `
-                    <div class="modal-section" style="margin-top: 2rem; background: var(--light-green); padding: 1.5rem; border-radius: 12px;">
-                        <div class="section-title" style="margin-bottom: 1rem;">RESUMEN GENERAL</div>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                `;
-                
-                resumenData.forEach(item => {
-                    const porcentaje = totalGeneral > 0 ? (item.valor_total / totalGeneral * 100).toFixed(1) : 0;
-                    previewHTML += `
-                        <div style="background: white; padding: 1rem; border-radius: 8px; text-align: center;">
-                            <div style="font-weight: bold; color: var(--verde-oscuro);">${item.categoria}</div>
-                            <div style="font-size: 0.9rem; margin: 0.5rem 0;">${item.elementos} elementos</div>
-                            <div style="font-size: 1.1rem; font-weight: bold; color: var(--verde-claro);">$${formatNumber(item.valor_total)}</div>
-                            <div style="font-size: 0.8rem; color: var(--gris-medio);">${porcentaje}%</div>
-                        </div>
-                    `;
-                });
-                
-                previewHTML += `
-                            <div style="background: var(--verde-claro); color: white; padding: 1rem; border-radius: 8px; text-align: center;">
-                                <div style="font-weight: bold;">TOTAL GENERAL</div>
-                                <div style="font-size: 1.3rem; font-weight: bold; margin-top: 0.5rem;">$${formatNumber(totalGeneral)}</div>
-                            </div>
-                        </div>
+                return `
+                    <div class="section-title-tab">Materiales Consolidados (${items.length} elementos)</div>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="background: var(--verde-antioquia); color: white;">
+                                    <th style="padding: 1rem; border: 1px solid #ddd; text-align: left;">Descripción</th>
+                                    <th style="padding: 1rem; border: 1px solid #ddd; text-align: center;">Unidad</th>
+                                    <th style="padding: 1rem; border: 1px solid #ddd; text-align: center;">Precio Unitario</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${items.map((item, index) => `
+                                    <tr style="background: ${index % 2 === 0 ? '#f8f9fa' : 'white'};">
+                                        <td style="padding: 0.75rem; border: 1px solid #ddd;"><strong>${item.descripcion}</strong></td>
+                                        <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: center;">${item.unidad}</td>
+                                        <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(item.precio_tarifa)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
                     </div>
                 `;
             }
             
-            consolidatedPreviewContent.innerHTML = previewHTML;
+            // Función para crear tabla de EQUIPOS
+            function createEquiposTable(items) {
+                if (items.length === 0) {
+                    return '<div style="text-align: center; padding: 2rem; color: var(--gris-medio);">No hay equipos para mostrar.</div>';
+                }
+                
+                return `
+                    <div class="section-title-tab">Equipos Consolidados (${items.length} elementos)</div>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="background: var(--verde-antioquia); color: white;">
+                                    <th style="padding: 1rem; border: 1px solid #ddd; text-align: left;">Descripción</th>
+                                    <th style="padding: 1rem; border: 1px solid #ddd; text-align: center;">Tarifa/Hora-Día</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${items.map((item, index) => `
+                                    <tr style="background: ${index % 2 === 0 ? '#f8f9fa' : 'white'};">
+                                        <td style="padding: 0.75rem; border: 1px solid #ddd;"><strong>${item.descripcion}</strong></td>
+                                        <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(item.tarifa_hora_dia)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+            
+            // Función para crear tabla de TRANSPORTES
+            function createTransportesTable(items) {
+                if (items.length === 0) {
+                    return '<div style="text-align: center; padding: 2rem; color: var(--gris-medio);">No hay transportes para mostrar.</div>';
+                }
+                
+                return `
+                    <div class="section-title-tab">Transportes Consolidados (${items.length} elementos)</div>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="background: var(--verde-antioquia); color: white;">
+                                    <th style="padding: 1rem; border: 1px solid #ddd; text-align: left;">Descripción</th>
+                                    <th style="padding: 1rem; border: 1px solid #ddd; text-align: center;">Tarifa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${items.map((item, index) => `
+                                    <tr style="background: ${index % 2 === 0 ? '#f8f9fa' : 'white'};">
+                                        <td style="padding: 0.75rem; border: 1px solid #ddd;"><strong>${item.descripcion}</strong></td>
+                                        <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(item.precio_tarifa)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+            
+            // Función para crear tabla de MANO DE OBRA
+            function createManoObraTable(items) {
+                if (items.length === 0) {
+                    return '<div style="text-align: center; padding: 2rem; color: var(--gris-medio);">No hay mano de obra para mostrar.</div>';
+                }
+                
+                return `
+                    <div class="section-title-tab">Mano de Obra Consolidada (${items.length} elementos)</div>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="background: var(--verde-antioquia); color: white;">
+                                    <th style="padding: 1rem; border: 1px solid #ddd; text-align: left;">Descripción</th>
+                                    <th style="padding: 1rem; border: 1px solid #ddd; text-align: center;">Jornal</th>
+                                    <th style="padding: 1rem; border: 1px solid #ddd; text-align: center;">Jornal Total (+ Prestaciones)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${items.map((item, index) => `
+                                    <tr style="background: ${index % 2 === 0 ? '#f8f9fa' : 'white'};">
+                                        <td style="padding: 0.75rem; border: 1px solid #ddd;"><strong>${item.descripcion}</strong></td>
+                                        <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(item.jornal)}</td>
+                                        <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(item.jornal_total)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+            
+            // Función para crear tabla de OTROS (Matrices y Trabajos)
+            function createOtrosTable(matrices, trabajos) {
+                const todosItems = [
+                    ...matrices.map(item => ({...item, tipo: 'Matriz'})),
+                    ...trabajos.map(item => ({...item, tipo: 'Trabajo'}))
+                ].sort((a, b) => a.tipo.localeCompare(b.tipo) || a.descripcion.localeCompare(b.descripcion));
+                
+                if (todosItems.length === 0) {
+                    return '<div style="text-align: center; padding: 2rem; color: var(--gris-medio);">No hay otros elementos para mostrar.</div>';
+                }
+                
+                return `
+                    <div class="section-title-tab">Otros Elementos (${todosItems.length} elementos)</div>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="background: var(--verde-antioquia); color: white;">
+                                    <th style="padding: 1rem; border: 1px solid #ddd; text-align: center;">Tipo</th>
+                                    <th style="padding: 1rem; border: 1px solid #ddd; text-align: left;">Descripción</th>
+                                    <th style="padding: 1rem; border: 1px solid #ddd; text-align: center;">Unidad</th>
+                                    <th style="padding: 1rem; border: 1px solid #ddd; text-align: center;">Precio Unit.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${todosItems.map((item, index) => `
+                                    <tr style="background: ${index % 2 === 0 ? '#f8f9fa' : 'white'};">
+                                        <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: center;">
+                                            <span style="background: ${item.tipo === 'Matriz' ? 'var(--dorado)' : 'var(--verde-claro)'}; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">
+                                                ${item.tipo}
+                                            </span>
+                                        </td>
+                                        <td style="padding: 0.75rem; border: 1px solid #ddd;"><strong>${item.descripcion}</strong></td>
+                                        <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: center;">${item.unidad}</td>
+                                        <td style="padding: 0.75rem; border: 1px solid #ddd; text-align: right; font-family: monospace;">$${formatNumber(item.precio_tarifa)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+            
+            // Llenar cada sección
+            document.getElementById('materiales-content').innerHTML = createMaterialesTable(materialesConsolidados);
+            document.getElementById('equipos-content').innerHTML = createEquiposTable(equiposConsolidados);
+            document.getElementById('transporte-content').innerHTML = createTransportesTable(transportesConsolidados);
+            document.getElementById('manoobra-content').innerHTML = createManoObraTable(manoObraConsolidada);
+            document.getElementById('otros-content').innerHTML = createOtrosTable(matricesConsolidadas, trabajosConsolidados);
+            
+            // Actualizar badges con contadores
+            document.getElementById('materiales-badge').textContent = materialesConsolidados.length;
+            document.getElementById('equipos-badge').textContent = equiposConsolidados.length;
+            document.getElementById('transporte-badge').textContent = transportesConsolidados.length;
+            document.getElementById('manoobra-badge').textContent = manoObraConsolidada.length;
+            document.getElementById('otros-badge').textContent = matricesConsolidadas.length + trabajosConsolidados.length;
+            
             consolidatedModalOverlay.classList.add('active');
         }
-
-
-
 
         // Función para exportar listas consolidadas
         function exportConsolidatedLists() {
@@ -2137,8 +3097,53 @@
             XLSX.writeFile(wb, `Listas_Consolidadas_${new Date().toISOString().split('T')[0]}.xlsx`);
         }
 
+
+        // Funciones de navegación
+        function showPresentacion() {
+            hideAllSections();
+            document.getElementById('presentacion-section').classList.add('active');
+            updateActiveNav('presentacion');
+        }
+
+        function showMarcoMetodologico() {
+            hideAllSections();
+            document.getElementById('marco-metodologico-section').classList.add('active');
+            updateActiveNav('marco-metodologico');
+        }
+
+        function showAPUs() {
+            hideAllSections();
+            document.getElementById('apus-section').classList.add('active');
+            updateActiveNav('apus');
+        }
+
+        function hideAllSections() {
+            const sections = document.querySelectorAll('.content-section');
+            console.log(sections)
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+        }
+
+        function updateActiveNav(activeSection) {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const activeLink = document.querySelector(`a[href="#${activeSection}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+
+
+
         // ===== INITIALIZE ON LOAD =====
         document.addEventListener('DOMContentLoaded', loadJSONData);
     </script>
+
+
+
+
 </body>
 </html>
