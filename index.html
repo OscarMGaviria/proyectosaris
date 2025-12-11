@@ -250,7 +250,7 @@
         #apus-section {
             height: 100%;
             overflow: hidden;
-            display: flex;
+            display: none;
             flex-direction: column;
         }
 
@@ -638,9 +638,12 @@
 ================================ */
 .presentacion-container {
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 40px;
+    align-items: flex-start;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 /* ===============================
@@ -648,18 +651,22 @@
 ================================ */
 .presentacion-card {
     width: 80%;
+    height: 100%;
     background: #ffffff;
     padding: 30px 40px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     border: 1px solid #e5e5e5;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 /* ===============================
    CONTENIDO SCROLL
 ================================ */
 .presentacion-content {
-    max-height: 400px;
+    max-height: 600px;
     overflow-y: auto;
     padding-right: 12px;
     text-align: justify;
@@ -807,11 +814,16 @@
 
         /* Content Sections */
         .content-section {
-            display: none;
+            display: none !important;
         }
 
         .content-section.active {
-            display: block;
+            display: block !important;
+        }
+
+        #apus-section.active {
+            display: flex !important;
+            flex-direction: column;
         }
 
         .presentacion-content, .marco-metodologico-content {
@@ -1391,68 +1403,9 @@
 
 
 
-    </div>
+
     <!-- Main Content -->
-    <div class="main-container" style="display: none;">
-        <!-- Controls -->
-        <div class="controls-panel">
-            <div class="controls-row">
-                <div class="search-container">
-                    <svg class="search-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                    </svg>
-                    <input type="text" class="search-input" id="searchInput" placeholder="Buscar por código o descripción...">
-                </div>
-                <div class="filter-container">
-                    <select id="subregionFilter" class="filter-select">
-                        <option value="">Todas las subregiones</option>
-                    </select>
-                </div>
-            </div>
-        </div>
 
-        <!-- Table -->
-        <div class="table-container">
-            <div class="table-header">
-                <div class="table-title">APUs Disponibles</div>
-
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div class="table-info">Total: <span id="tableCount">0</span> elementos</div>
-                    <button class="btn btn-primary" id="downloadBtn" disabled style="padding: 0.5rem 1rem; font-size: 0.85rem;">
-                        Descargar Excel (<span id="selectedCount">0</span>)
-                    </button>
-                    <button class="btn btn-primary" id="consolidatedBtn" disabled style="padding: 0.5rem 1rem; font-size: 0.85rem; margin-left: 0.5rem;">
-                        Listas Consolidadas (<span id="selectedCountConsolidated">0</span>)
-                    </button>
-                </div>
-
-            </div>
-            <div class="table-wrapper" id="tableWrapper">
-                <!-- Loading indicator -->
-                <div class="loading-indicator" id="loadingIndicator">
-                    <div class="loading-spinner"></div>
-                    <div style="font-size: 1.1rem; margin-bottom: 0.5rem;">Cargando APUs...</div>
-                    <div style="font-size: 0.9rem; opacity: 0.8;">Por favor espera un momento</div>
-                </div>
-                
-                <!-- Table -->
-                <table id="apuTable" style="display: none;">
-                    <thead>
-                        <tr>
-                            <th style="width: 50px;"><input type="checkbox" id="selectAll" style="accent-color: var(--dorado);"></th>
-                            <th style="width: 80px;">Ítem</th>
-                            <th>Descripción</th>
-                            <th style="width: 100px;">Unidad</th>
-                            <th style="width: 120px;">Subregión</th>
-                            <th style="width: 140px; text-align: right;">Precio</th>
-                        </tr>
-                    </thead>
-                    <tbody id="apuTableBody">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 
     <!-- Modal -->
     <div class="modal-overlay" id="modalOverlay">
@@ -1614,20 +1567,93 @@
         // ===== INITIALIZATION =====
         async function loadJSONData() {
             try {
-                console.log('Intentando cargar APUs_Estructurados.json...');
-                const response = await fetch('APUs_Estructurados.json');
+                console.log('🔍 Buscando archivos JSON de APUs...');
                 
-                if (!response.ok) {
-                    throw new Error(`Error HTTP ${response.status}: ${response.statusText}`);
+                // Lista de archivos JSON que VIPRA intentará cargar
+                const possibleFiles = [
+                    // Archivos con fecha actual
+                    `APUs_General_${new Date().toISOString().split('T')[0]}.json`,
+                    `APUs_AMVA_y_Oriente_${new Date().toISOString().split('T')[0]}.json`,
+                    `APUs_Suroeste_${new Date().toISOString().split('T')[0]}.json`,
+                    `APUs_Occidente_${new Date().toISOString().split('T')[0]}.json`,
+                    `APUs_Norte_${new Date().toISOString().split('T')[0]}.json`,
+                    `APUs_Nordeste_${new Date().toISOString().split('T')[0]}.json`,
+                    `APUs_Uraba_${new Date().toISOString().split('T')[0]}.json`,
+                    `APUs_Bajo_Cauca_${new Date().toISOString().split('T')[0]}.json`,
+                    `APUs_Magdalena_Medio_${new Date().toISOString().split('T')[0]}.json`,
+                    
+                    // Archivos genéricos (sin fecha)
+                    'APUs_General.json',
+                    'APUs_AMVA_y_Oriente.json', 
+                    'APUs_Suroeste.json',
+                    'APUs_Occidente.json',
+                    'APUs_Norte.json',
+                    'APUs_Nordeste.json',
+                    'APUs_Uraba.json',
+                    'APUs_Bajo_Cauca.json',
+                    'APUs_Magdalena_Medio.json',
+                    
+                    // Archivo consolidado original
+                    'APUs_Estructurados.json'
+                ];
+                
+                let consolidatedData = {};
+                let loadedFiles = [];
+                let failedFiles = [];
+                
+                // Intentar cargar cada archivo
+                for (const fileName of possibleFiles) {
+                    try {
+                        console.log(`📂 Intentando cargar: ${fileName}`);
+                        const response = await fetch(fileName);
+                        
+                        if (response.ok) {
+                            const jsonData = await response.json();
+                            
+                            // Combinar datos con IDs únicos por subregión
+                            const newAPUs = Object.keys(jsonData).length;
+                            let addedAPUs = 0;
+                            
+                            Object.entries(jsonData).forEach(([apuId, apuData]) => {
+                                // Crear ID único combinando subregión + ID original
+                                const subregion = apuData.subregion || 'Sin_Region';
+                                const uniqueId = `${subregion}_${apuId}`;
+                                
+                                // Solo agregar si no existe (evitar duplicados exactos)
+                                if (!consolidatedData[uniqueId]) {
+                                    consolidatedData[uniqueId] = {
+                                        ...apuData,
+                                        originalId: apuId  // Guardar ID original para referencia
+                                    };
+                                    addedAPUs++;
+                                }
+                            });
+                            
+                            loadedFiles.push(`${fileName} (${addedAPUs} APUs únicos)`);
+                            console.log(`✅ ${fileName} cargado: ${addedAPUs} APUs únicos de ${newAPUs} totales`);
+                        } else {
+                            console.log(`⚠️ ${fileName} no disponible (${response.status})`);
+                        }
+                    } catch (fileError) {
+                        console.log(`❌ Error con ${fileName}:`, fileError.message);
+                        failedFiles.push(fileName);
+                    }
                 }
                 
-                const jsonData = await response.json();
-                console.log('JSON cargado exitosamente:', Object.keys(jsonData).length + ' APUs');
+                // Verificar si se cargó al menos un archivo
+                if (loadedFiles.length === 0) {
+                    throw new Error(`No se encontraron archivos JSON. Archivos buscados: ${possibleFiles.slice(0, 5).join(', ')}... y otros.`);
+                }
                 
-                // Convertir datos JSON a formato interno
-                allAPUs = Object.entries(jsonData).map(([key, data], index) => ({
+                console.log(`🎉 Carga completada:`);
+                console.log(`   ✅ ${loadedFiles.length} archivo(s) cargado(s)`);
+                console.log(`   📊 ${Object.keys(consolidatedData).length} APUs totales`);
+                loadedFiles.forEach(file => console.log(`      - ${file}`));
+                
+                // Convertir datos consolidados a formato interno
+                allAPUs = Object.entries(consolidatedData).map(([key, data], index) => ({
                     id: index,
-                    item: key,
+                    item: data.originalId || key.split('_').slice(1).join('_') || key, // Mostrar ID original
                     description: data.descripcion || '',
                     unit: data.unidad || 'N/A',
                     subregion: data.subregion || 'Sin especificar',
@@ -1645,26 +1671,105 @@
                 populateFilters();
                 renderTable();
                 
+                // Mostrar mensaje de éxito
+                showLoadingSuccess(loadedFiles);
+                
             } catch (error) {
-                console.error('Error cargando el archivo JSON:', error);
+                console.error('❌ Error crítico cargando archivos JSON:', error);
                 
                 loadingIndicator.innerHTML = `
                     <div style="color: #d32f2f;">
                         <h3>Error al cargar los datos</h3>
                         <p style="margin: 1rem 0;">${error.message}</p>
                         <div style="font-size: 0.9rem; color: var(--gris-medio); background: #fff3e0; padding: 1rem; border-radius: 8px; text-align: left; max-width: 600px; margin: 0 auto;">
-                            <strong>Posibles soluciones:</strong>
-                            <ol style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                                <li>Asegúrate de que el archivo <code>APUs_Estructurados.json</code> esté en la misma carpeta que este HTML.</li>
-                                <li>Verifica que el archivo JSON tenga formato válido.</li>
-                                <li>Si estás probando localmente, usa un servidor web local (no abras el HTML directamente).</li>
-                                <li>Ejemplo de servidor local: <code>python -m http.server 8000</code></li>
-                            </ol>
+                            <strong>Asegúrate de tener al menos uno de estos archivos:</strong>
+                            <ul style="margin: 0.5rem 0; padding-left: 1.5rem; font-size: 0.8rem;">
+                                <li><code>APUs_General_${new Date().toISOString().split('T')[0]}.json</code></li>
+                                <li><code>APUs_Suroeste_${new Date().toISOString().split('T')[0]}.json</code></li>
+                                <li><code>APUs_AMVA_y_Oriente_${new Date().toISOString().split('T')[0]}.json</code></li>
+                                <li><code>APUs_Estructurados.json</code> (formato original)</li>
+                            </ul>
+                            <strong>Nota:</strong> Usa un servidor web local, no abras el HTML directamente.<br>
+                            <strong>Ejemplo:</strong> <code>python -m http.server 8000</code>
                         </div>
                     </div>
                 `;
             }
         }
+
+
+
+
+        function showLoadingSuccess(loadedFiles) {
+            // Crear mensaje temporal de éxito
+            const successDiv = document.createElement('div');
+            successDiv.style.cssText = `
+                position: fixed; 
+                top: 20px; 
+                right: 20px; 
+                background: linear-gradient(135deg, var(--verde-claro), var(--verde-antioquia)); 
+                color: white; 
+                padding: 1rem; 
+                border-radius: 8px; 
+                box-shadow: var(--sombra); 
+                z-index: 1000;
+                max-width: 300px;
+                font-size: 0.9rem;
+            `;
+            
+            successDiv.innerHTML = `
+                <strong>📊 Datos cargados exitosamente</strong><br>
+                <small>${loadedFiles.length} archivo(s):<br>
+                ${loadedFiles.slice(0, 3).map(f => `• ${f.split('(')[0].trim()}`).join('<br>')}
+                ${loadedFiles.length > 3 ? '<br>• ...' : ''}
+                </small>
+            `;
+            
+            document.body.appendChild(successDiv);
+            
+            // Remover después de 5 segundos
+            setTimeout(() => {
+                if (document.body.contains(successDiv)) {
+                    document.body.removeChild(successDiv);
+                }
+            }, 5000);
+        }
+
+
+
+    async function detectJSONFiles() {
+        // Lista de patrones comunes para archivos JSON de APUs
+        const commonPatterns = [
+            'APUs_General',
+            'APUs_AMVA',
+            'APUs_Suroeste', 
+            'APUs_Occidente',
+            'APUs_Norte',
+            'APUs_Nordeste',
+            'APUs_Uraba',
+            'APUs_Bajo_Cauca',
+            'APUs_Magdalena_Medio'
+        ];
+        
+        const availableFiles = [];
+        const currentDate = new Date().toISOString().split('T')[0];
+        
+        for (const pattern of commonPatterns) {
+            const fileName = `${pattern}_${currentDate}.json`;
+            try {
+                const response = await fetch(fileName, { method: 'HEAD' });
+                if (response.ok) {
+                    availableFiles.push(fileName);
+                }
+            } catch (error) {
+                // Archivo no existe, continuar
+            }
+        }
+        
+        return availableFiles;
+    }
+
+
 
         // ===== STATS UPDATE =====
         function updateStats() {
@@ -2489,9 +2594,19 @@
                     {wch: 12}, {wch: 15}, {wch: 18}, {wch: 15}
                 ];
 
-                // Nombre de la hoja
-                const sheetName = `APU_${apu.item}`.substring(0, 31).replace(/[\\\/\?\*\[\]:]/g, '_');
-                XLSX.utils.book_append_sheet(wb, ws, sheetName);
+                // Nombre de la hoja único incluyendo subregión
+            const cleanSubregion = apu.subregion.replace(/[^a-zA-Z0-9]/g, '').substring(0, 10);
+            let sheetName = `${cleanSubregion}_${apu.item}`.substring(0, 31).replace(/[\\\/\?\*\[\]:]/g, '_');
+
+            // Verificar si ya existe y agregar número si es necesario
+            let counter = 1;
+            let originalSheetName = sheetName;
+            while (wb.SheetNames.includes(sheetName)) {
+                sheetName = `${originalSheetName.substring(0, 28)}_${counter}`;
+                counter++;
+            }
+
+            XLSX.utils.book_append_sheet(wb, ws, sheetName);
             });
             
             // ========== AGREGAR LISTAS CONSOLIDADAS ==========
@@ -3119,7 +3234,6 @@
 
         function hideAllSections() {
             const sections = document.querySelectorAll('.content-section');
-            console.log(sections)
             sections.forEach(section => {
                 section.classList.remove('active');
             });
